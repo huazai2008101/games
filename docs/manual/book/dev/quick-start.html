@@ -1,0 +1,411 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>快速开始 - 在线游戏平台文档</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="在线游戏平台:平台介绍、玩家使用指南与游戏开发商接入文档">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">在线游戏平台文档</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="快速开始"><a class="header" href="#快速开始">快速开始</a></h1>
+<p>本章给出从零接入的最短路径:写一个最小的双人都不需要的"猜大小"单机小游戏,走完 构建 → 入驻 → 创建游戏 → 提审 → 上架 的全链路。完成后你就掌握了接入所需的全部关键动作,之后把最小游戏替换成你的真实玩法即可。</p>
+<p>预计耗时:纯开发约 0.5–1 人日;线上全链路(含平台入驻与包审核时效)准备充分时当天可完成。</p>
+<h2 id="step-0-准备环境"><a class="header" href="#step-0-准备环境">Step 0 准备环境</a></h2>
+<ul>
+<li>Node.js 20 LTS 或更高版本,自带 npm。</li>
+<li>从<a href="sdk-download.html">SDK 下载</a>获取双 SDK 源码包,解压备用:</li>
+</ul>
+<pre><code class="language-text">my-game/
+├── sdks/
+│   ├── game-backend-sdk/    游戏逻辑 SDK
+│   └── game-frontend-sdk/   游戏前端 SDK
+├── backend/                 游戏逻辑工程(本页 Step 1)
+└── frontend/                游戏前端工程(本页 Step 2)
+</code></pre>
+<h2 id="step-1-最小游戏逻辑"><a class="header" href="#step-1-最小游戏逻辑">Step 1 最小游戏逻辑</a></h2>
+<p>游戏逻辑是一份 TypeScript 工程,构建为单文件 IIFE bundle 提交。新建 <code>backend/</code> 工程,<code>package.json</code> 以 <code>file:</code> 协议引用 SDK:</p>
+<pre><code class="language-json">{
+  "name": "hilo-backend",
+  "private": true,
+  "scripts": { "build": "vite build" },
+  "dependencies": {
+    "@game-platform/backend-sdk": "file:../sdks/game-backend-sdk"
+  },
+  "devDependencies": { "typescript": "^5.0.0", "vite": "^5.0.0" }
+}
+</code></pre>
+<p><code>vite.config.ts</code>,产物为单文件 IIFE:</p>
+<pre><code class="language-typescript">import { defineConfig } from 'vite'
+
+export default defineConfig({
+  build: {
+    target: 'es2015',
+    minify: false,
+    lib: { entry: 'src/game.ts', name: 'Game', formats: ['iife'], fileName: () =&gt; 'game.js' },
+  },
+})
+</code></pre>
+<p><code>src/game.ts</code>,全部玩法逻辑——扣一次底注,用公平随机掷一个 1–100 的点数,猜对翻倍:</p>
+<pre><code class="language-typescript">import { GameLifecycle, registerGame } from '@game-platform/backend-sdk'
+
+class HiLoGame extends GameLifecycle {
+  // 会话就绪:广播规则快照,观战者与后进入者也能重建画面
+  onInit() {
+    platform.broadcast('hilo:init', { min_bet: 1, max_bet: 100 })
+  }
+
+  // 状态对账:首次进入、断线重连、页面恢复可见都会触发,必须实现
+  onSync(playerId: string) {
+    platform.sendTo(playerId, 'hilo:sync', {
+      players: platform.getPlayers().map(p =&gt; p.id),
+    })
+  }
+
+  onAction(playerId: string, action: string, payload: any) {
+    if (action !== 'play') return
+    const bet = Math.floor(Number(payload.bet) || 0)
+    if (bet &lt; 1) return
+    const guess = payload.guess === 'hi' ? 'hi' : 'lo'
+
+    const roundId = platform.beginRound()
+    if (!roundId) return                 // 已有未闭合回合,忽略本次
+    let roll = 0
+    let committed = false
+    try {
+      platform.deductBalance(playerId, bet, 'hilo bet')
+      const seedId = 'fair:' + roundId
+      if (!platform.beginFairRound(seedId)) return
+      roll = Math.floor(platform.getFairRandom(seedId, 0) * 100) + 1
+      const win = guess === 'hi' ? roll &gt; 50 : roll &lt;= 50
+      if (win) platform.rewardBalance(playerId, bet * 2, 'hilo payout')
+      platform.revealFairRound(seedId)
+      platform.recordResult(playerId, win ? 'win' : 'lose', win ? bet : -bet)
+    } finally {
+      committed = platform.endRound()   // 无论成败,回合必须闭合
+    }
+    if (!committed) {
+      platform.sendTo(playerId, 'hilo:error', { reason: platform.lastRoundError() })
+      return
+    }
+    platform.broadcast('hilo:result', {
+      player_id: playerId,
+      roll,
+      round_id: roundId,
+      balance_version: platform.getBalanceVersion(playerId),
+    })
+  }
+}
+
+registerGame(new HiLoGame())
+</code></pre>
+<p>构建:</p>
+<pre><code class="language-bash">cd backend &amp;&amp; npm install &amp;&amp; npm run build
+# 产物 dist/game.js 即"游戏逻辑包"全文
+</code></pre>
+<h2 id="step-2-最小游戏前端"><a class="header" href="#step-2-最小游戏前端">Step 2 最小游戏前端</a></h2>
+<p>游戏前端是常规 Web 工程,任意框架或纯 JS 均可,产物为纯静态资源。以最简的纯 TypeScript 页面为例,<code>frontend/src/main.ts</code>:</p>
+<pre><code class="language-typescript">import { GameClient, GameLifecycle, requestHostGameConfig, notifyGameExit } from '@game-platform/frontend-sdk'
+
+let client: GameClient
+
+class HiLoView extends GameLifecycle {
+  onSessionJoin() { client.ready() }              // quick 模式:就绪后等待平台开局
+  onStart() { setHint('对局开始,选择大或小') }
+  onEvent(action: string, payload: any) {
+    if (action === 'hilo:result') showResult(payload.roll)
+    if (action === 'wallet:balance') setBalance(payload.balance)   // 实际实现需按 version 单调守卫
+  }
+  onError(err: string) { setHint('出错:' + err) }
+}
+
+// 1. 向大厅宿主索取连接配置(身份由宿主持有,游戏前端不接触玩家凭证)
+const config = await requestHostGameConfig()
+
+// 2. 连接平台 WebSocket,SDK 每次连接与重连自动向宿主索取一次性票据
+client = new GameClient({
+  url: config.wsUrl,
+  gameId: config.gameId,
+  ticketProvider: config.requestTicket,
+})
+client.use(new HiLoView())
+await client.connect()
+
+// 3. 发送玩法动作
+document.querySelector('#hi')!.addEventListener('click', () =&gt; {
+  client.sendAction('play', { bet: 10, guess: 'hi' })
+})
+
+// 4. 游戏内返回按钮:通知大厅返回,禁止自行实现跳转
+document.querySelector('#exit')!.addEventListener('click', () =&gt; notifyGameExit())
+</code></pre>
+<p><code>index.html</code> 提供按钮与结果显示的骨架即可。构建并打包 zip(根目录必须包含 index.html):</p>
+<pre><code class="language-bash">cd frontend &amp;&amp; npm install &amp;&amp; npm run build
+cd dist &amp;&amp; zip -r ../dist.zip .
+# dist.zip 即"游戏前端包"
+</code></pre>
+<p>前端工程要求与更多细节见<a href="game-frontend.html">游戏前端开发</a>。</p>
+<h2 id="step-3-注册开发商账号"><a class="header" href="#step-3-注册开发商账号">Step 3 注册开发商账号</a></h2>
+<p>打开后台登录页 <a href="https://game.zihua-chen.cn/admin/">game.zihua-chen.cn/admin</a>,点击"开发商入驻",填写开发商代码、公司/团队名、管理员账号与密码后提交,等待平台激活账号。图文步骤见<a href="onboarding.html">入驻与创建游戏</a>。</p>
+<h2 id="step-4-创建游戏"><a class="header" href="#step-4-创建游戏">Step 4 创建游戏</a></h2>
+<p>用激活后的管理员账号登录后台,进入 内容生态 → 游戏管理 → 新建游戏:</p>
+<ul>
+<li>游戏名称:猜大小;描述随意填写</li>
+<li>分类任选(如休闲),缩略图可留空</li>
+<li>玩家数 1 至 1(单机玩法),游戏模式选快速匹配(quick),观战关闭</li>
+</ul>
+<p>保存后游戏出现在列表中,状态为草稿。记下列表第一列的<strong>游戏 ID</strong>(形如 <code>g_bfd9652bcf</code>),后续上传与提审都以它为标识。表单字段说明见<a href="onboarding.html">入驻与创建游戏</a>。</p>
+<h2 id="step-5-提审"><a class="header" href="#step-5-提审">Step 5 提审</a></h2>
+<p>在后台操作:游戏管理 → 对应游戏行的"版本"按钮进入游戏版本页,上传前端包 dist.zip 与后端 dist/game.js、填写版本号后提交,表单用法见<a href="review.html">提交与审核</a>。</p>
+<p>依赖随机结果的玩法应在提审时申报 <code>rtpDeclared</code>(期望回报率)与 <code>rakeRateDeclared</code>(平台抽成),本例胜负各半、猜对得双倍,回报率为 100.00。平台按申报值做漂移监控,见<a href="funds.html">资金接入</a>。需要脚本化提审(如接入 CI)时,上传与提交的接口定义同样见<a href="review.html">提交与审核</a>。</p>
+<h2 id="step-6-过审上架"><a class="header" href="#step-6-过审上架">Step 6 过审上架</a></h2>
+<p>提审后版本进入 <code>pending_review</code>。平台审核通过即自动发布:游戏转为 approved、出现在大厅列表,无需另行上架操作。驳回原因在包记录的 <code>reviewComment</code> 字段返回,修改后重新提审即可。</p>
+<p>至此第一个游戏上线。玩家进入游戏时的完整链路如下:</p>
+<pre class="mermaid">sequenceDiagram
+    participant U as 玩家
+    participant L as 大厅页面
+    participant G as 游戏 iframe
+    participant P as 平台网关
+
+    U-&gt;&gt;L: 点击游戏卡片
+    L-&gt;&gt;P: GET /game/:id 拿 frontendUrl 与会话配置
+    L-&gt;&gt;G: iframe 加载游戏前端包
+    G-&gt;&gt;L: postMessage 索取连接配置
+    L--&gt;&gt;G: wsUrl、gameId、requestTicket
+    G-&gt;&gt;L: postMessage 索取一次性票据
+    L-&gt;&gt;P: POST /game/ws/ticket(持玩家令牌)
+    P--&gt;&gt;G: ticket(单次有效,30 秒过期)
+    G-&gt;&gt;P: WebSocket ?ticket=&amp;gameId=
+    P--&gt;&gt;G: session:joined → session:started
+    G-&gt;&gt;P: action 消息(玩法动作)
+    P--&gt;&gt;G: 游戏事件广播与 wallet:balance 实时推送
+</pre>
+<h2 id="下一步"><a class="header" href="#下一步">下一步</a></h2>
+<ul>
+<li>换成你的真实玩法:<a href="game-backend.html">游戏逻辑开发</a>、<a href="game-frontend.html">游戏前端开发</a></li>
+<li>涉及资金与随机的完整规则:<a href="funds.html">资金接入</a></li>
+<li>协议与消息格式细节:<a href="protocol.html">事件与协议规范</a></li>
+<li>提审前自检:<a href="local-dev.html">本地开发与自测</a>、<a href="limits.html">平台限制与接入清单</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../dev/overview.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../dev/onboarding.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../dev/overview.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../dev/onboarding.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

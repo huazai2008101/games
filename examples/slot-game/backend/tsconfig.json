@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "ES2015",
+    "moduleResolution": "bundler",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "lib": ["ES5"]
+  },
+  "include": ["src"]
+}

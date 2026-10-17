@@ -1,0 +1,11 @@
+{
+  "bets": [10, 50, 100],
+  "targetTile": 2048,
+  "tiers": [
+    { "maxTile": 128, "multiplier": 0.5 },
+    { "maxTile": 256, "multiplier": 1.2 },
+    { "maxTile": 512, "multiplier": 2.5 },
+    { "maxTile": 1024, "multiplier": 5 },
+    { "maxTile": 2048, "multiplier": 20 }
+  ]
+}

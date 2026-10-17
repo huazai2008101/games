@@ -1,0 +1,1488 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>在线游戏平台文档</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="在线游戏平台:平台介绍、玩家使用指南与游戏开发商接入文档">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">在线游戏平台文档</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="平台简介"><a class="header" href="#平台简介">平台简介</a></h1>
+<p>在线游戏平台是一个面向网页游戏的联机游戏平台。玩家在浏览器中即可完成游戏发现、开局与对战,无需下载客户端。游戏开发商按平台规范开发一次,即可获得游戏分发、联机对战、匹配与结算能力。</p>
+<h2 id="平台能力"><a class="header" href="#平台能力">平台能力</a></h2>
+<ul>
+<li><strong>游戏即点即玩</strong>:游戏以 Web 静态包形式托管,在大厅点击卡片即可进入,支持分类筛选、搜索、收藏与最近游玩。</li>
+<li><strong>实时联机</strong>:平台统一提供 WebSocket 网关、会话管理、断线重连与在线状态,游戏只需专注玩法逻辑。</li>
+<li><strong>两种开局方式</strong>:quick 模式由平台自动匹配玩家,人数达标后自动开局;room 模式提供房间码,适合好友组局。</li>
+<li><strong>平台托管结算</strong>:玩家金币余额由平台托管,游戏按回合发起扣款与奖励,结算原子完成并全程留痕。</li>
+<li><strong>公平随机</strong>:内置 commit-reveal 公平随机协议,玩家可独立验证每局随机结果。</li>
+<li><strong>版本化内容审核</strong>:游戏前端包与逻辑包分别提审,审核通过即发布,支持版本回滚。</li>
+<li><strong>运营支撑</strong>:管理后台覆盖开发商管理、玩家管理、财务、内容运营、数据看板与客服工单。</li>
+</ul>
+<h2 id="角色与入口"><a class="header" href="#角色与入口">角色与入口</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>角色</th><th>入口</th><th>职责</th></tr></thead><tbody>
+<tr><td>玩家</td><td><a href="https://game.zihua-chen.cn">game.zihua-chen.cn</a></td><td>注册账号,发现并游玩游戏,管理钱包与个人设置</td></tr>
+<tr><td>开发商</td><td><a href="https://game.zihua-chen.cn/admin/">game.zihua-chen.cn/admin</a></td><td>开发游戏并提审发布,管理名下游戏</td></tr>
+<tr><td>平台运营</td><td><a href="https://game.zihua-chen.cn/admin/">game.zihua-chen.cn/admin</a></td><td>内容审核、财务管理、内容运营、数据看板与客服支持</td></tr>
+</tbody></table>
+</div>
+<h2 id="技术栈"><a class="header" href="#技术栈">技术栈</a></h2>
+<p>后端基于 Go,依赖 PostgreSQL 与 Redis,由 admin、lobby、game-api 三个服务组成,另含一个 S3 兼容对象存储(开发环境内置,生产复用独立存储)。前端为 Vue 3 单页应用,玩家大厅使用 Tailwind CSS,管理后台使用 Element Plus。游戏逻辑运行在 goja 沙箱中,由平台托管执行。游戏前端包存储在 S3 兼容对象存储上。通信采用 REST 与 WebSocket,平台为游戏两端提供 TypeScript SDK。</p>
+<h2 id="当前版本边界"><a class="header" href="#当前版本边界">当前版本边界</a></h2>
+<p>以下能力当前版本尚未提供,接入与使用时请据此规划:</p>
+<ul>
+<li>无独立 Sandbox 环境:线上平台即为验证环境,支付为沙箱模拟、金币为虚拟物品。</li>
+<li>提现通道未开放:金币不可兑回法币。</li>
+<li>游戏逻辑无外部网络能力:不支持需要游戏自建服务器或访问第三方 API 的玩法。</li>
+<li>平台级投注上下限未实现:单注限额由各游戏逻辑自行约束。</li>
+<li>原生客户端不支持:平台只承载浏览器内运行的游戏。</li>
+</ul>
+<h2 id="技术支持"><a class="header" href="#技术支持">技术支持</a></h2>
+<p>接入或使用过程中遇到问题,可通过以下方式联系平台技术支持:</p>
+<ul>
+<li>QQ:597291437</li>
+<li>邮箱:<a href="mailto:597291437@qq.com">597291437@qq.com</a></li>
+</ul>
+<h2 id="使用声明"><a class="header" href="#使用声明">使用声明</a></h2>
+<p>平台金币为虚拟物品,仅用于学习研究与技术演示,不涉及真实资金交易。充值支付为沙箱模拟流程,金币不可兑回。平台提供充值限额与自我排除等健康游戏工具,见<a href="intro/../player/safety.html">合规与账户安全</a>。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="系统架构"><a class="header" href="#系统架构">系统架构</a></h1>
+<h2 id="服务组成"><a class="header" href="#服务组成">服务组成</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>组件</th><th>说明</th></tr></thead><tbody>
+<tr><td>玩家大厅</td><td>Vue 3 单页应用,提供游戏列表、搜索、收藏、游戏宿主、钱包与个人中心</td></tr>
+<tr><td>管理后台</td><td>Vue 3 单页应用,承载平台运营与开发商后台</td></tr>
+<tr><td>Admin API</td><td>后台服务,负责管理员与开发商账号、游戏与版本审核、财务、内容运营</td></tr>
+<tr><td>Lobby API</td><td>大厅服务,负责玩家注册登录、游戏列表、钱包、签到任务、通知与充值</td></tr>
+<tr><td>Game API</td><td>WebSocket 网关与游戏逻辑运行时,负责会话状态机、匹配、回合结算与公平随机</td></tr>
+<tr><td>PostgreSQL / Redis</td><td>关系存储与缓存,Redis 同时承载实时余额推送</td></tr>
+<tr><td>对象存储</td><td>S3 兼容存储,托管审核通过的游戏前端包</td></tr>
+</tbody></table>
+</div>
+<h2 id="身份体系"><a class="header" href="#身份体系">身份体系</a></h2>
+<p>平台区分三类账号。玩家由大厅自助注册,注册即创建玩家账户与钱包,凭玩家令牌访问大厅与游戏服务。管理后台用户与玩家分属两个独立身份域,RBAC 权限体系只约束后台用户。开发商是后台侧账号,只能操作本开发商名下的游戏。</p>
+<h2 id="游戏托管模型"><a class="header" href="#游戏托管模型">游戏托管模型</a></h2>
+<p>一款游戏由游戏前端与游戏逻辑两部分组成,均由开发商开发、平台托管运行。</p>
+<ul>
+<li><strong>游戏前端</strong>是标准 Web 静态资源,以 iframe 方式嵌入大厅页面运行。</li>
+<li><strong>游戏逻辑</strong>是一份 JavaScript 程序,提交到平台后由隔离运行时托管执行,负责全部权威玩法逻辑与结算。游戏逻辑不暴露任何网络接口,玩家无法绕过前端直接访问。</li>
+</ul>
+<pre class="mermaid">flowchart LR
+    subgraph BROWSER[&quot;玩家浏览器&quot;]
+        L[&quot;平台大厅&quot;] -- &quot;iframe 嵌入&quot; --&gt; GF[&quot;游戏前端&lt;br/&gt;开发商静态页面&quot;]
+    end
+    subgraph PLATFORM[&quot;平台&quot;]
+        H[&quot;大厅宿主&quot;] -- &quot;postMessage&lt;br/&gt;连接配置与票据&quot; --&gt; GF
+        G[&quot;WebSocket 网关&quot;] --&gt; R[&quot;游戏逻辑运行时&lt;br/&gt;托管开发商代码&quot;]
+        R -- &quot;回合结算&quot; --&gt; W[&quot;钱包服务&quot;]
+        S[&quot;静态资源托管&lt;br/&gt;存放游戏前端包&quot;]
+        P[&quot;平台 API&quot;]
+    end
+    GF -- &quot;WebSocket 游戏事件&quot; --&gt; G
+    L -- &quot;REST&quot; --&gt; P
+    DEV[&quot;开发商后台与 CI&quot;] -- &quot;提包、提审、查询&quot; --&gt; P
+    P -- &quot;审核通过发布&quot; --&gt; S
+    P -- &quot;审核通过发布&quot; --&gt; R
+</pre>
+<p>设计原则:</p>
+<ol>
+<li><strong>凭证不进游戏前端</strong>:游戏前端运行在不授予 <code>allow-same-origin</code> 的 iframe 沙箱中,通过宿主协议向大厅索取一次性 WebSocket 票据;票据单次有效、30 秒过期,玩家长期凭证不会离开大厅。宿主按消息来源窗口校验 opaque-origin postMessage,Game API 仅在配置了游戏包来源时接受对应的 <code>Origin: null</code> WebSocket。</li>
+<li><strong>权威在服务端</strong>:影响玩法与资金的操作均由平台托管的游戏逻辑裁决,前端只负责表现。</li>
+<li><strong>资金平台托管</strong>:游戏逻辑只能通过平台回合接口发起扣款与奖励,结算原子完成并全程留痕。</li>
+</ol>
+<h2 id="对局链路"><a class="header" href="#对局链路">对局链路</a></h2>
+<ul>
+<li>会话状态机为 <code>created → waiting → ready → playing → finished</code>,error 与 timeout 为终态,玩法动作仅在 playing 状态受理。</li>
+<li>quick 模式由匹配器按游戏自动池化玩家,人数达到 minPlayer 即自动开局。</li>
+<li>room 模式通过 REST 创建房间并获得 6 位房间码,其他玩家凭码加入等待室,房主满足人数后开局。</li>
+<li>观战为会话级只读连接,需游戏声明允许。</li>
+</ul>
+<h2 id="资金链路"><a class="header" href="#资金链路">资金链路</a></h2>
+<p>玩家钱包由余额与流水两部分组成,一切资金变动包裹在显式回合中,整回合原子提交、失败整体回滚。余额变更在事务提交后经 Redis 发布订阅广播,由网关实时推送到玩家的全部连接,游戏内余额显示无需轮询。充值遵循实名认证、下单、渠道回调、同事务入账的闭环,幂等键防止重复入账。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="注册与登录"><a class="header" href="#注册与登录">注册与登录</a></h1>
+<h2 id="注册账号"><a class="header" href="#注册账号">注册账号</a></h2>
+<p>进入大厅 <a href="https://game.zihua-chen.cn">game.zihua-chen.cn</a>,点击右上角注册,填写以下信息:</p>
+<div class="table-wrapper"><table><thead><tr><th>字段</th><th>要求</th></tr></thead><tbody>
+<tr><td>用户名</td><td>必填,3–50 个字符,全局唯一</td></tr>
+<tr><td>昵称</td><td>选填,最长 20 字符,游戏内展示名,留空时使用用户名</td></tr>
+<tr><td>邮箱</td><td>必填,用于找回密码</td></tr>
+<tr><td>密码</td><td>至少 6 位</td></tr>
+</tbody></table>
+</div>
+<p>注册即表示已知悉平台使用条款:本平台仅用于学习研究与技术演示,不涉及真实资金交易。注册成功后自动登录,并返回之前访问的页面。</p>
+<h2 id="登录"><a class="header" href="#登录">登录</a></h2>
+<p>支持用户名加密码登录。未登录状态下点击游戏卡片、充值等入口,会先进入登录页,登录后自动返回。</p>
+<h2 id="找回密码"><a class="header" href="#找回密码">找回密码</a></h2>
+<ol>
+<li>在登录页输入注册邮箱,获取 6 位重置码。重置码 10 分钟内有效,沙箱环境下由平台日志下发,可联系平台获取。</li>
+<li>输入重置码与新密码完成重置。重置后所有设备需重新登录。</li>
+</ol>
+<p>个人中心不提供改密码入口,修改密码统一通过找回密码流程完成。</p>
+<h2 id="注销账号"><a class="header" href="#注销账号">注销账号</a></h2>
+<p>个人中心的账户与安全页提供注销入口,操作需输入登录密码确认。注销后账号不可恢复,交易流水按合规要求保留用于对账,注销成功后自动退出登录。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="游戏大厅"><a class="header" href="#游戏大厅">游戏大厅</a></h1>
+<p>大厅首页 <a href="https://game.zihua-chen.cn">game.zihua-chen.cn</a> 是玩家发现游戏的主入口,页面自上而下分为以下区块:</p>
+<div class="table-wrapper"><table><thead><tr><th>区块</th><th>说明</th></tr></thead><tbody>
+<tr><td>公告条</td><td>展示平台公告,内容由运营配置,仅显示标题</td></tr>
+<tr><td>轮播位</td><td>运营配置的推荐内容,自动轮换,悬停暂停,支持滑动与箭头切换,绑定游戏的轮播可一键进入</td></tr>
+<tr><td>最近在玩</td><td>登录后展示近期游玩过的游戏,横向滑动,点击继续</td></tr>
+<tr><td>我的收藏</td><td>登录后展示收藏的游戏</td></tr>
+<tr><td>编辑推荐</td><td>运营配置的推荐位,点击进入对应游戏</td></tr>
+<tr><td>分类筛选</td><td>全部与各分类标签,点击过滤下方游戏列表</td></tr>
+<tr><td>游戏网格</td><td>全部上架游戏,加载中显示骨架屏,失败可重试</td></tr>
+</tbody></table>
+</div>
+<p>游戏卡片展示封面、分类角标与标题,悬停出现立即进入按钮,整卡可点击。未登录点击游戏会先进入登录页,登录后自动回到该游戏。</p>
+<h2 id="搜索"><a class="header" href="#搜索">搜索</a></h2>
+<p>点击顶栏搜索入口或使用快捷键 Ctrl/⌘+K 打开全屏搜索。</p>
+<ul>
+<li>输入即搜,最多返回 20 条结果,回车直达第一个结果。</li>
+<li>无关键词时展示最近 8 条搜索历史与热门游戏入口,历史可一键清除。</li>
+<li>Esc 键先清空关键词,再次按下关闭搜索。</li>
+</ul>
+<h2 id="收藏与最近游玩"><a class="header" href="#收藏与最近游玩">收藏与最近游玩</a></h2>
+<p>进入游戏页后可收藏或取消收藏。有游玩记录的游戏出现在首页最近在玩,点击封面直接回到游戏。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="开始游戏"><a class="header" href="#开始游戏">开始游戏</a></h1>
+<p>进入游戏页后,游戏以 iframe 方式嵌入运行。开局方式由游戏配置决定,分为 quick 与 room 两种。</p>
+<h2 id="quick-模式"><a class="header" href="#quick-模式">quick 模式</a></h2>
+<p>点击游戏卡片直接进入,无需手动操作。平台自动将玩家加入该游戏的匹配队列,人数达到开局要求后自动开始对局。该模式适合对战与牌桌类玩法。</p>
+<h2 id="room-模式"><a class="header" href="#room-模式">room 模式</a></h2>
+<p>进入游戏页先显示房间面板。</p>
+<ul>
+<li><strong>创建房间</strong>:房主获得 6 位房间码,可复制邀请链接发送给好友。此前有未开始的房间时会自动恢复。</li>
+<li><strong>加入房间</strong>:输入好友的房间码加入,房间码自动转为大写。</li>
+</ul>
+<p>等待室展示房间号、状态、玩家数与玩家列表,房主带房主标记。人数满足开局要求后,房主可点击开始游戏,其余玩家等待即可,也可离开房间退出等待。对局开始后等待室收起,游戏画面接管。</p>
+<h2 id="对局中"><a class="header" href="#对局中">对局中</a></h2>
+<ul>
+<li>余额显示在顶栏并实时更新。游戏内的余额变动由平台实时推送,无需刷新页面。</li>
+<li>断线或刷新页面后重新进入游戏,平台会带回原对局并恢复局面。离席玩家的座位通常由游戏托管,归队后自动恢复操作。</li>
+<li>支持观战的游戏可通过观战链接只读观看对局。</li>
+<li>点击游戏内返回按钮回到大厅首页,直接关闭页面不影响对局状态。</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="充值"><a class="header" href="#充值">充值</a></h1>
+<p>大厅顶栏点击充值进入充值页。充值前需完成实名认证,未实名时页面会先引导认证。</p>
+<h2 id="实名认证"><a class="header" href="#实名认证">实名认证</a></h2>
+<p>填写真实姓名与身份证号提交。前端按国家标准校验证件号格式,通过后显示认证状态与证件尾号。身份信息仅用于合规校验,平台不以明文保存。</p>
+<h2 id="充值与到账"><a class="header" href="#充值与到账">充值与到账</a></h2>
+<p>平台提供 6、30、98、198、328、648 元六档充值面额(以充值页实际展示为准),兑换比例为 1 元兑换 100 金币,到账实时推送。</p>
+<ol>
+<li>选择档位并确认,生成订单,页面展示订单号与状态。</li>
+<li>完成支付。当前支付渠道为沙箱模拟支付,不发生真实扣款。</li>
+<li>支付成功后金币自动到账,顶栏余额即时刷新。</li>
+</ol>
+<p>订单状态包括待支付、支付中、已到账、已失败、已过期与已退款。未完成支付的订单不会扣款,支付结果异常时可稍后在充值记录中查看。</p>
+<h2 id="充值记录"><a class="header" href="#充值记录">充值记录</a></h2>
+<p>充值页下方展示最近 10 条充值记录,包含档位、时间、订单号、金额与状态。</p>
+<p>金币为单向获取的虚拟物品,不可兑回,见<a href="player/safety.html">合规与账户安全</a>。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="个人中心"><a class="header" href="#个人中心">个人中心</a></h1>
+<p>顶栏点击用户名进入个人中心,包含资料、成长、任务、记录与安全设置。</p>
+<h2 id="基本资料"><a class="header" href="#基本资料">基本资料</a></h2>
+<p>昵称可修改,1–20 个字符,保存后游戏内下一局生效。头像为固定占位,暂不支持上传。</p>
+<h2 id="成长与福利"><a class="header" href="#成长与福利">成长与福利</a></h2>
+<ul>
+<li><strong>等级体系</strong>:游玩积累经验,等级与进度条随经验提升。</li>
+<li><strong>每日签到</strong>:7 天循环,每日奖励金币,当日签到当日领取。</li>
+<li><strong>每日任务</strong>:完成任务目标后领取金币奖励,页面显示完成进度。</li>
+</ul>
+<h2 id="统计与记录"><a class="header" href="#统计与记录">统计与记录</a></h2>
+<ul>
+<li><strong>统计</strong>:金币余额、交易笔数与游戏场次。</li>
+<li><strong>对局记录</strong>:最近 10 条,含游戏名、时间、胜平负结果与分数变化。</li>
+<li><strong>金币流水</strong>:最近 50 条,含描述、时间与金额方向。</li>
+</ul>
+<h2 id="账户与安全"><a class="header" href="#账户与安全">账户与安全</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>功能</th><th>说明</th></tr></thead><tbody>
+<tr><td>当日充值限额</td><td>自主设定每日充值上限,只能下调</td></tr>
+<tr><td>自我排除冷静期</td><td>可选 3、7、30、180 天,排除期内无法充值,也不能自行解除</td></tr>
+<tr><td>账号注销</td><td>输入登录密码确认,注销后不可恢复,流水保留用于对账</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="通知中心"><a class="header" href="#通知中心">通知中心</a></h1>
+<p>顶栏铃铛进入通知中心,交易与系统消息在此展示。</p>
+<ul>
+<li>每页最多 50 条,展示标题、正文与时间。</li>
+<li>未读消息带未读标记,点击即标记已读,也可一键全部已读。</li>
+<li>顶栏铃铛显示未读数量,超过 99 显示为 99+。</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="合规与账户安全"><a class="header" href="#合规与账户安全">合规与账户安全</a></h1>
+<h2 id="使用范围"><a class="header" href="#使用范围">使用范围</a></h2>
+<p>平台金币为虚拟物品,充值支付为沙箱模拟流程,不发生真实扣款,金币不可兑回法币,提现通道未开放。平台页面长期展示适度游戏、理性消费提示。</p>
+<h2 id="健康游戏工具"><a class="header" href="#健康游戏工具">健康游戏工具</a></h2>
+<p>个人中心的账户与安全页提供两项自主工具。</p>
+<ul>
+<li><strong>当日充值限额</strong>:设定每日充值上限,一经下调不可自行调高。</li>
+<li><strong>自我排除冷静期</strong>:可选 3、7、30、180 天,排除期内无法充值,期内不能自行解除。</li>
+</ul>
+<h2 id="账号安全"><a class="header" href="#账号安全">账号安全</a></h2>
+<ul>
+<li>密码找回仅通过注册邮箱的重置码流程,重置后所有设备强制下线。</li>
+<li>玩家凭证不会下发到任何游戏页面。游戏只能获取一次性 WebSocket 票据,票据单次有效且 30 秒过期。</li>
+<li>注销账号需密码二次确认,注销后流水按合规要求保留用于对账。</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="管理后台概览"><a class="header" href="#管理后台概览">管理后台概览</a></h1>
+<p>管理后台位于 <a href="https://game.zihua-chen.cn/admin/">game.zihua-chen.cn/admin/</a>,供平台运营与开发商使用。账号由平台创建或经开发商自助注册,登录后按角色与权限控制可见页面与接口。开发商账号只能管理本开发商名下的游戏,越权返回 403。</p>
+<h2 id="页面一览"><a class="header" href="#页面一览">页面一览</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>分组</th><th>页面</th><th>用途</th></tr></thead><tbody>
+<tr><td>概览</td><td>仪表盘</td><td>平台运行概览与待处理事项</td></tr>
+<tr><td>内容生态</td><td>开发商管理</td><td>开发商资料、账号状态与旗下资源</td></tr>
+<tr><td>内容生态</td><td>分类管理</td><td>大厅展示分类与游戏归属</td></tr>
+<tr><td>内容生态</td><td>游戏管理</td><td>游戏信息、缩略图、联机参数与上下架状态</td></tr>
+<tr><td>内容生态</td><td>游戏版本</td><td>按游戏提交版本:前端包与逻辑包上传或继承、申报 RTP 与抽成</td></tr>
+<tr><td>内容生态</td><td>游戏审核</td><td>审查开发商提交的版本,通过即发布</td></tr>
+<tr><td>运营中心</td><td>内容运营</td><td>大厅轮播、公告与推荐位维护</td></tr>
+<tr><td>运营中心</td><td>券管理</td><td>金币券与补签卡的批次发放和启停</td></tr>
+<tr><td>玩家与财务</td><td>玩家管理</td><td>玩家账户、余额、流水查询与处置</td></tr>
+<tr><td>玩家与财务</td><td>财务中心</td><td>充值订单、渠道对账、发放批次、提现审核与风控工作台</td></tr>
+<tr><td>玩家与财务</td><td>管理员账号</td><td>后台账号、角色授权、禁用与密码重置</td></tr>
+<tr><td>数据与支持</td><td>数据看板</td><td>平台总览、转化漏斗、留存与游戏健康度</td></tr>
+<tr><td>数据与支持</td><td>客服工单</td><td>玩家工单受理、回复、补偿与回合回放仲裁</td></tr>
+<tr><td>系统管理</td><td>菜单管理</td><td>配置后台导航结构与入口排序</td></tr>
+<tr><td>系统管理</td><td>权限管理</td><td>按菜单维护接口权限点</td></tr>
+<tr><td>系统管理</td><td>角色管理</td><td>管理角色并分配权限</td></tr>
+<tr><td>系统管理</td><td>审计日志</td><td>后台关键操作追踪</td></tr>
+</tbody></table>
+</div>
+<h2 id="角色说明"><a class="header" href="#角色说明">角色说明</a></h2>
+<ul>
+<li><strong>平台运营</strong>:可见全部页面。内容审核、玩家管理、财务、风控与系统管理属平台职能,开发商账号无权限。</li>
+<li><strong>开发商</strong>:登录后仅可见与自身相关的页面,典型工作流是 游戏管理建游戏 → 游戏版本提包提审 → 版本迭代,详见<a href="admin/../dev/overview.html">开发商接入指南</a>。</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="接入总览"><a class="header" href="#接入总览">接入总览</a></h1>
+<p>本指南面向游戏开发商,说明如何将一款游戏接入本平台,并获得分发、联机、匹配与结算能力。接入完成后,玩家在大厅内即可发现、进入并游玩你的游戏。</p>
+<p>建议阅读顺序:先读本章建立整体认知,再按<a href="dev/quick-start.html">快速开始</a>跑通第一个版本,其余章节按需查阅。</p>
+<h2 id="文档约定"><a class="header" href="#文档约定">文档约定</a></h2>
+<ul>
+<li>必须:强制要求,不满足将无法通过审核或无法正常运行。</li>
+<li>禁止:强制禁止,违反将导致提审被拒或运行被终止。</li>
+<li>建议:推荐做法,平台以此为准设计,偏离需自行承担兼容风险。</li>
+</ul>
+<h2 id="平台能力-1"><a class="header" href="#平台能力-1">平台能力</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>能力</th><th>说明</th></tr></thead><tbody>
+<tr><td>游戏分发</td><td>游戏上架后进入大厅游戏列表,支持分类、搜索、收藏与最近游玩</td></tr>
+<tr><td>联机对战</td><td>平台提供 WebSocket 网关、会话管理、断线重连与在线状态</td></tr>
+<tr><td>匹配系统</td><td>quick 模式下平台自动撮合玩家并开局</td></tr>
+<tr><td>房间系统</td><td>room 模式下平台提供房间创建、房间码加入与等待室长轮询</td></tr>
+<tr><td>观战</td><td>会话级只读观战,需游戏声明允许</td></tr>
+<tr><td>托管结算</td><td>平台托管玩家余额,提供回合级原子结算、流水审计与实时余额推送</td></tr>
+<tr><td>对局记录</td><td>游戏上报胜负结果后,玩家可在个人中心查看对局记录</td></tr>
+<tr><td>公平随机</td><td>提供 commit-reveal 公平随机协议,玩家可独立验证随机结果</td></tr>
+<tr><td>内容审核</td><td>前端包与游戏逻辑包版本化提审,审核通过即发布,支持版本回滚</td></tr>
+</tbody></table>
+</div>
+<h2 id="你要开发什么"><a class="header" href="#你要开发什么">你要开发什么</a></h2>
+<p>接入本平台不需要自建服务器、域名与运维。一款游戏由两部分产物组成,均由你开发、平台托管运行:</p>
+<div class="table-wrapper"><table><thead><tr><th>产物</th><th>形态</th><th>上限</th></tr></thead><tbody>
+<tr><td>游戏逻辑包</td><td>单文件 JavaScript bundle(IIFE),承载全部权威玩法与结算</td><td>512 KiB</td></tr>
+<tr><td>游戏前端包</td><td>纯静态 Web 资源 zip,根目录含 index.html,以 iframe 嵌入大厅</td><td>zip ≤ 25 MB</td></tr>
+</tbody></table>
+</div>
+<p>职责划分:</p>
+<div class="table-wrapper"><table><thead><tr><th>由你负责</th><th>由平台负责</th></tr></thead><tbody>
+<tr><td>玩法规则与游戏逻辑</td><td>账号注册登录与身份凭证</td></tr>
+<tr><td>前端界面与交互表现</td><td>钱包、余额、流水与回合结算</td></tr>
+<tr><td>回合内扣款与奖励的调用时机</td><td>WebSocket 网关、会话状态机、断线重连</td></tr>
+<tr><td>游戏自定义事件的定义与处理</td><td>匹配、房间、观战</td></tr>
+<tr><td>对局胜负结果上报</td><td>公平随机基础设施</td></tr>
+<tr><td>版本迭代与提审</td><td>内容审核、发布、回滚与分发</td></tr>
+</tbody></table>
+</div>
+<p>游戏逻辑运行在平台的隔离运行时中,不暴露任何网络接口,玩家无法绕过前端直接访问;游戏前端永远不持有玩家长期凭证,只通过一次性票据连接。</p>
+<h2 id="适合什么游戏"><a class="header" href="#适合什么游戏">适合什么游戏</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>评估</th><th>类型</th><th>说明</th></tr></thead><tbody>
+<tr><td>官方支持</td><td>牌桌、棋类、老虎机、休闲对战等回合制或会话制玩法</td><td>平台的会话模型(最长 2 小时)与回合结算即为这类玩法设计</td></tr>
+<tr><td>可能接入</td><td>其他能满足运行约束的浏览器玩法</td><td>逻辑包 ≤ 512 KiB 且无外部依赖、单次回调 ≤ 2 秒、消息帧 ≤ 64 KiB;前端框架任意,能产出纯静态包即可</td></tr>
+<tr><td>不支持</td><td>需要自建游戏服务器或访问外部网络与第三方 API 的玩法</td><td>逻辑运行时无任何网络能力,禁止 fetch、XMLHttpRequest、WebSocket</td></tr>
+<tr><td>不支持</td><td>原生客户端与需要分发安装包的游戏</td><td>平台只承载浏览器内运行的游戏</td></tr>
+<tr><td>不支持</td><td>单局时长超过 2 小时的大型持久玩法</td><td>会话最长存活 2 小时,超时进入终态</td></tr>
+</tbody></table>
+</div>
+<h2 id="接入架构"><a class="header" href="#接入架构">接入架构</a></h2>
+<pre class="mermaid">flowchart LR
+    subgraph BROWSER[&quot;玩家浏览器&quot;]
+        L[&quot;平台大厅&quot;] -- &quot;iframe 嵌入&quot; --&gt; GF[&quot;游戏前端&lt;br/&gt;开发商静态页面&quot;]
+    end
+    subgraph PLATFORM[&quot;平台&quot;]
+        H[&quot;大厅宿主&quot;] -- &quot;postMessage&lt;br/&gt;连接配置与票据&quot; --&gt; GF
+        G[&quot;WebSocket 网关&quot;] --&gt; R[&quot;游戏逻辑运行时&lt;br/&gt;托管开发商代码&quot;]
+        R -- &quot;回合结算&quot; --&gt; W[&quot;钱包服务&quot;]
+        S[&quot;静态资源托管&lt;br/&gt;存放游戏前端包&quot;]
+        P[&quot;平台 API&quot;]
+    end
+    GF -- &quot;WebSocket 游戏事件&quot; --&gt; G
+    L -- &quot;REST&quot; --&gt; P
+    DEV[&quot;开发商后台与 CI&quot;] -- &quot;提包、提审、查询&quot; --&gt; P
+    P -- &quot;审核通过发布&quot; --&gt; S
+    P -- &quot;审核通过发布&quot; --&gt; R
+</pre>
+<p>设计原则:</p>
+<ol>
+<li><strong>凭证不进游戏前端</strong>:游戏前端通过宿主协议向大厅索取一次性 WebSocket 票据,票据单次有效、30 秒过期。</li>
+<li><strong>权威在服务端</strong>:影响玩法与资金的操作均由游戏逻辑裁决,前端只负责表现。</li>
+<li><strong>资金平台托管</strong>:游戏逻辑只能通过平台回合接口发起扣款与奖励,结算原子完成并全程留痕。</li>
+</ol>
+<h2 id="接入流程"><a class="header" href="#接入流程">接入流程</a></h2>
+<pre><code class="language-text">注册开发商账号 → 平台资质审核 → 登录开发商后台
+  → 创建游戏,录入基础信息与联机参数
+  → 开发游戏前端与游戏逻辑 → 本地自检自测
+  → 提审,上传前端包并提交游戏逻辑包
+  → 平台审核 ──驳回──▶ 按意见修改后重新提审
+       └──通过──▶ 自动发布上架 → 版本迭代
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>阶段</th><th>责任方</th><th>说明</th></tr></thead><tbody>
+<tr><td>入驻审核</td><td>平台</td><td>开发商注册后为待激活状态,资质审核通过后开通登录</td></tr>
+<tr><td>创建游戏</td><td>开发商</td><td>后台录入游戏基础信息与联机参数</td></tr>
+<tr><td>开发自测</td><td>开发商</td><td>使用双 SDK 开发,按自检清单完成本地自测</td></tr>
+<tr><td>包审核</td><td>平台</td><td>对前端包与游戏逻辑包做安全与合规审核,首个版本通过即自动上架</td></tr>
+<tr><td>版本发布</td><td>平台</td><td>审核通过立即全量发布,线上问题可回滚至任一已过审版本</td></tr>
+</tbody></table>
+</div>
+<h2 id="接入复杂度评估"><a class="header" href="#接入复杂度评估">接入复杂度评估</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>项</th><th>评估</th></tr></thead><tbody>
+<tr><td>接入难度</td><td>中低:无需服务端开发与运维,核心工作是两份纯前端向产物</td></tr>
+<tr><td>必须开发</td><td>游戏逻辑 bundle(生命周期钩子 + 回合结算)、游戏前端静态包(接入前端 SDK)</td></tr>
+<tr><td>可选开发</td><td>离席托管与 AI 补位、观战视图、对局结果上报(建议实现)</td></tr>
+<tr><td>平台提供</td><td>账号、钱包、结算、匹配、房间、观战、网关与重连、公平随机、审核发布与分发</td></tr>
+<tr><td>最小 Demo</td><td>约 0.5–1 人日:单一玩法动作 + 一次回合结算,参照<a href="dev/quick-start.html">快速开始</a></td></tr>
+<tr><td>完整休闲对战</td><td>约 3–5 人日:牌桌或棋类完整规则、多人结算、断线托管</td></tr>
+<tr><td>联调与提审</td><td>另预留 1–2 人日,含一轮驳回修改</td></tr>
+</tbody></table>
+</div>
+<p>以上估算以熟悉 TypeScript 与 WebSocket 的开发者为前提,不含玩法设计与美术资源工作量。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="快速开始"><a class="header" href="#快速开始">快速开始</a></h1>
+<p>本章给出从零接入的最短路径:写一个最小的双人都不需要的"猜大小"单机小游戏,走完 构建 → 入驻 → 创建游戏 → 提审 → 上架 的全链路。完成后你就掌握了接入所需的全部关键动作,之后把最小游戏替换成你的真实玩法即可。</p>
+<p>预计耗时:纯开发约 0.5–1 人日;线上全链路(含平台入驻与包审核时效)准备充分时当天可完成。</p>
+<h2 id="step-0-准备环境"><a class="header" href="#step-0-准备环境">Step 0 准备环境</a></h2>
+<ul>
+<li>Node.js 20 LTS 或更高版本,自带 npm。</li>
+<li>从<a href="dev/sdk-download.html">SDK 下载</a>获取双 SDK 源码包,解压备用:</li>
+</ul>
+<pre><code class="language-text">my-game/
+├── sdks/
+│   ├── game-backend-sdk/    游戏逻辑 SDK
+│   └── game-frontend-sdk/   游戏前端 SDK
+├── backend/                 游戏逻辑工程(本页 Step 1)
+└── frontend/                游戏前端工程(本页 Step 2)
+</code></pre>
+<h2 id="step-1-最小游戏逻辑"><a class="header" href="#step-1-最小游戏逻辑">Step 1 最小游戏逻辑</a></h2>
+<p>游戏逻辑是一份 TypeScript 工程,构建为单文件 IIFE bundle 提交。新建 <code>backend/</code> 工程,<code>package.json</code> 以 <code>file:</code> 协议引用 SDK:</p>
+<pre><code class="language-json">{
+  "name": "hilo-backend",
+  "private": true,
+  "scripts": { "build": "vite build" },
+  "dependencies": {
+    "@game-platform/backend-sdk": "file:../sdks/game-backend-sdk"
+  },
+  "devDependencies": { "typescript": "^5.0.0", "vite": "^5.0.0" }
+}
+</code></pre>
+<p><code>vite.config.ts</code>,产物为单文件 IIFE:</p>
+<pre><code class="language-typescript">import { defineConfig } from 'vite'
+
+export default defineConfig({
+  build: {
+    target: 'es2015',
+    minify: false,
+    lib: { entry: 'src/game.ts', name: 'Game', formats: ['iife'], fileName: () =&gt; 'game.js' },
+  },
+})
+</code></pre>
+<p><code>src/game.ts</code>,全部玩法逻辑——扣一次底注,用公平随机掷一个 1–100 的点数,猜对翻倍:</p>
+<pre><code class="language-typescript">import { GameLifecycle, registerGame } from '@game-platform/backend-sdk'
+
+class HiLoGame extends GameLifecycle {
+  // 会话就绪:广播规则快照,观战者与后进入者也能重建画面
+  onInit() {
+    platform.broadcast('hilo:init', { min_bet: 1, max_bet: 100 })
+  }
+
+  // 状态对账:首次进入、断线重连、页面恢复可见都会触发,必须实现
+  onSync(playerId: string) {
+    platform.sendTo(playerId, 'hilo:sync', {
+      players: platform.getPlayers().map(p =&gt; p.id),
+    })
+  }
+
+  onAction(playerId: string, action: string, payload: any) {
+    if (action !== 'play') return
+    const bet = Math.floor(Number(payload.bet) || 0)
+    if (bet &lt; 1) return
+    const guess = payload.guess === 'hi' ? 'hi' : 'lo'
+
+    const roundId = platform.beginRound()
+    if (!roundId) return                 // 已有未闭合回合,忽略本次
+    let roll = 0
+    let committed = false
+    try {
+      platform.deductBalance(playerId, bet, 'hilo bet')
+      const seedId = 'fair:' + roundId
+      if (!platform.beginFairRound(seedId)) return
+      roll = Math.floor(platform.getFairRandom(seedId, 0) * 100) + 1
+      const win = guess === 'hi' ? roll &gt; 50 : roll &lt;= 50
+      if (win) platform.rewardBalance(playerId, bet * 2, 'hilo payout')
+      platform.revealFairRound(seedId)
+      platform.recordResult(playerId, win ? 'win' : 'lose', win ? bet : -bet)
+    } finally {
+      committed = platform.endRound()   // 无论成败,回合必须闭合
+    }
+    if (!committed) {
+      platform.sendTo(playerId, 'hilo:error', { reason: platform.lastRoundError() })
+      return
+    }
+    platform.broadcast('hilo:result', {
+      player_id: playerId,
+      roll,
+      round_id: roundId,
+      balance_version: platform.getBalanceVersion(playerId),
+    })
+  }
+}
+
+registerGame(new HiLoGame())
+</code></pre>
+<p>构建:</p>
+<pre><code class="language-bash">cd backend &amp;&amp; npm install &amp;&amp; npm run build
+# 产物 dist/game.js 即"游戏逻辑包"全文
+</code></pre>
+<h2 id="step-2-最小游戏前端"><a class="header" href="#step-2-最小游戏前端">Step 2 最小游戏前端</a></h2>
+<p>游戏前端是常规 Web 工程,任意框架或纯 JS 均可,产物为纯静态资源。以最简的纯 TypeScript 页面为例,<code>frontend/src/main.ts</code>:</p>
+<pre><code class="language-typescript">import { GameClient, GameLifecycle, requestHostGameConfig, notifyGameExit } from '@game-platform/frontend-sdk'
+
+let client: GameClient
+
+class HiLoView extends GameLifecycle {
+  onSessionJoin() { client.ready() }              // quick 模式:就绪后等待平台开局
+  onStart() { setHint('对局开始,选择大或小') }
+  onEvent(action: string, payload: any) {
+    if (action === 'hilo:result') showResult(payload.roll)
+    if (action === 'wallet:balance') setBalance(payload.balance)   // 实际实现需按 version 单调守卫
+  }
+  onError(err: string) { setHint('出错:' + err) }
+}
+
+// 1. 向大厅宿主索取连接配置(身份由宿主持有,游戏前端不接触玩家凭证)
+const config = await requestHostGameConfig()
+
+// 2. 连接平台 WebSocket,SDK 每次连接与重连自动向宿主索取一次性票据
+client = new GameClient({
+  url: config.wsUrl,
+  gameId: config.gameId,
+  ticketProvider: config.requestTicket,
+})
+client.use(new HiLoView())
+await client.connect()
+
+// 3. 发送玩法动作
+document.querySelector('#hi')!.addEventListener('click', () =&gt; {
+  client.sendAction('play', { bet: 10, guess: 'hi' })
+})
+
+// 4. 游戏内返回按钮:通知大厅返回,禁止自行实现跳转
+document.querySelector('#exit')!.addEventListener('click', () =&gt; notifyGameExit())
+</code></pre>
+<p><code>index.html</code> 提供按钮与结果显示的骨架即可。构建并打包 zip(根目录必须包含 index.html):</p>
+<pre><code class="language-bash">cd frontend &amp;&amp; npm install &amp;&amp; npm run build
+cd dist &amp;&amp; zip -r ../dist.zip .
+# dist.zip 即"游戏前端包"
+</code></pre>
+<p>前端工程要求与更多细节见<a href="dev/game-frontend.html">游戏前端开发</a>。</p>
+<h2 id="step-3-注册开发商账号"><a class="header" href="#step-3-注册开发商账号">Step 3 注册开发商账号</a></h2>
+<p>打开后台登录页 <a href="https://game.zihua-chen.cn/admin/">game.zihua-chen.cn/admin</a>,点击"开发商入驻",填写开发商代码、公司/团队名、管理员账号与密码后提交,等待平台激活账号。图文步骤见<a href="dev/onboarding.html">入驻与创建游戏</a>。</p>
+<h2 id="step-4-创建游戏"><a class="header" href="#step-4-创建游戏">Step 4 创建游戏</a></h2>
+<p>用激活后的管理员账号登录后台,进入 内容生态 → 游戏管理 → 新建游戏:</p>
+<ul>
+<li>游戏名称:猜大小;描述随意填写</li>
+<li>分类任选(如休闲),缩略图可留空</li>
+<li>玩家数 1 至 1(单机玩法),游戏模式选快速匹配(quick),观战关闭</li>
+</ul>
+<p>保存后游戏出现在列表中,状态为草稿。记下列表第一列的<strong>游戏 ID</strong>(形如 <code>g_bfd9652bcf</code>),后续上传与提审都以它为标识。表单字段说明见<a href="dev/onboarding.html">入驻与创建游戏</a>。</p>
+<h2 id="step-5-提审"><a class="header" href="#step-5-提审">Step 5 提审</a></h2>
+<p>在后台操作:游戏管理 → 对应游戏行的"版本"按钮进入游戏版本页,上传前端包 dist.zip 与后端 dist/game.js、填写版本号后提交,表单用法见<a href="dev/review.html">提交与审核</a>。</p>
+<p>依赖随机结果的玩法应在提审时申报 <code>rtpDeclared</code>(期望回报率)与 <code>rakeRateDeclared</code>(平台抽成),本例胜负各半、猜对得双倍,回报率为 100.00。平台按申报值做漂移监控,见<a href="dev/funds.html">资金接入</a>。需要脚本化提审(如接入 CI)时,上传与提交的接口定义同样见<a href="dev/review.html">提交与审核</a>。</p>
+<h2 id="step-6-过审上架"><a class="header" href="#step-6-过审上架">Step 6 过审上架</a></h2>
+<p>提审后版本进入 <code>pending_review</code>。平台审核通过即自动发布:游戏转为 approved、出现在大厅列表,无需另行上架操作。驳回原因在包记录的 <code>reviewComment</code> 字段返回,修改后重新提审即可。</p>
+<p>至此第一个游戏上线。玩家进入游戏时的完整链路如下:</p>
+<pre class="mermaid">sequenceDiagram
+    participant U as 玩家
+    participant L as 大厅页面
+    participant G as 游戏 iframe
+    participant P as 平台网关
+
+    U-&gt;&gt;L: 点击游戏卡片
+    L-&gt;&gt;P: GET /game/:id 拿 frontendUrl 与会话配置
+    L-&gt;&gt;G: iframe 加载游戏前端包
+    G-&gt;&gt;L: postMessage 索取连接配置
+    L--&gt;&gt;G: wsUrl、gameId、requestTicket
+    G-&gt;&gt;L: postMessage 索取一次性票据
+    L-&gt;&gt;P: POST /game/ws/ticket(持玩家令牌)
+    P--&gt;&gt;G: ticket(单次有效,30 秒过期)
+    G-&gt;&gt;P: WebSocket ?ticket=&amp;gameId=
+    P--&gt;&gt;G: session:joined → session:started
+    G-&gt;&gt;P: action 消息(玩法动作)
+    P--&gt;&gt;G: 游戏事件广播与 wallet:balance 实时推送
+</pre>
+<h2 id="下一步"><a class="header" href="#下一步">下一步</a></h2>
+<ul>
+<li>换成你的真实玩法:<a href="dev/game-backend.html">游戏逻辑开发</a>、<a href="dev/game-frontend.html">游戏前端开发</a></li>
+<li>涉及资金与随机的完整规则:<a href="dev/funds.html">资金接入</a></li>
+<li>协议与消息格式细节:<a href="dev/protocol.html">事件与协议规范</a></li>
+<li>提审前自检:<a href="dev/local-dev.html">本地开发与自测</a>、<a href="dev/limits.html">平台限制与接入清单</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="入驻与创建游戏"><a class="header" href="#入驻与创建游戏">入驻与创建游戏</a></h1>
+<p>入驻与创建游戏全部在管理后台完成,无需调用任何接口。后台地址:<a href="https://game.zihua-chen.cn/admin/">game.zihua-chen.cn/admin</a>。</p>
+<h2 id="第一步提交入驻申请"><a class="header" href="#第一步提交入驻申请">第一步:提交入驻申请</a></h2>
+<p>打开后台登录页,点击左下角"开发商入驻"。</p>
+<p><img src="dev/../supports/onboarding-login.png" alt="后台登录页" /></p>
+<p>在弹出的表单中填写:</p>
+<div class="table-wrapper"><table><thead><tr><th>字段</th><th>要求</th></tr></thead><tbody>
+<tr><td>开发商代码</td><td>2–30 位字母或数字,全局唯一,如 <code>pixelfun</code></td></tr>
+<tr><td>公司/团队名</td><td>不超过 100 字符,展示给平台运营</td></tr>
+<tr><td>管理员用户名</td><td>3–50 位,入驻通过后用它登录后台</td></tr>
+<tr><td>管理员邮箱</td><td>联系邮箱</td></tr>
+<tr><td>密码</td><td>至少 6 位</td></tr>
+</tbody></table>
+</div>
+<p><img src="dev/../supports/onboarding-register.png" alt="填写入驻申请" /></p>
+<p>提交后提示"入驻申请已提交,平台审核通过后即可登录":</p>
+<p><img src="dev/../supports/onboarding-submitted.png" alt="提交成功" /></p>
+<p>代码、用户名或邮箱重复会在表单上直接提示,换一个再提交即可。</p>
+<h2 id="第二步等待平台激活"><a class="header" href="#第二步等待平台激活">第二步:等待平台激活</a></h2>
+<p>入驻申请由平台运营在"开发商管理"中审核。激活前登录会被拒绝(错误码 403104/403301),激活后即可用管理员用户名和密码在登录页登录。开发商被平台停用后的表现相同,直至重新激活。</p>
+<p>登录后的账号能力边界:</p>
+<ul>
+<li>只能创建、修改、提审本开发商名下的游戏,越权返回 403。</li>
+<li>玩家管理、全量游戏列表、包审核与游戏上下架属平台职能,开发商无权限。</li>
+</ul>
+<h2 id="第三步创建游戏"><a class="header" href="#第三步创建游戏">第三步:创建游戏</a></h2>
+<p>登录后进入 内容生态 → 游戏管理,点击"新建游戏"。</p>
+<p><img src="dev/../supports/onboarding-games.png" alt="游戏管理页" /></p>
+<p>按表单填写:</p>
+<div class="table-wrapper"><table><thead><tr><th>字段</th><th>要求</th></tr></thead><tbody>
+<tr><td>游戏名称</td><td>必填,不超过 255 字符,同一开发商内唯一</td></tr>
+<tr><td>描述</td><td>必填,不超过 5000 字符,展示在大厅</td></tr>
+<tr><td>分类</td><td>平台预设分类,下拉选择,如休闲、竞技、棋牌</td></tr>
+<tr><td>缩略图</td><td>选填。上传 png/jpg/webp(不超过 2 MB),存储在平台对象存储并自动回填站内 URL;外站图片 URL 会被后台校验拒绝(大厅 CSP 仅放行站内图片)</td></tr>
+<tr><td>玩家数</td><td>最小到最大,1–100,最小不大于最大</td></tr>
+<tr><td>游戏模式</td><td>快速匹配(quick)或房间(room)</td></tr>
+<tr><td>允许观战</td><td>是否开启会话级只读观战</td></tr>
+</tbody></table>
+</div>
+<p><img src="dev/../supports/onboarding-game-create.png" alt="新建游戏表单" /></p>
+<p>会话模式选择:</p>
+<div class="table-wrapper"><table><thead><tr><th>模式</th><th>行为</th><th>适用</th></tr></thead><tbody>
+<tr><td>quick</td><td>玩家点击开始后进入平台匹配队列,会话人数达到 minPlayer 即自动就绪并开局</td><td>对战、牌桌类</td></tr>
+<tr><td>room</td><td>房主创建房间获得 6 位房间码,其他玩家凭码加入等待室,房主满足人数后开局</td><td>好友邀请、私密局</td></tr>
+</tbody></table>
+</div>
+<p>平台只在人数达到 minPlayer 时自动开局,人数不足时的补位或托管策略由游戏逻辑自行实现。除特殊玩法外建议 minPlayer 与 maxPlayer 相等,开局人数最确定、等待最短。</p>
+<p>保存后列表出现新游戏,状态为"草稿"、未发布,并分配游戏 ID:</p>
+<p><img src="dev/../supports/onboarding-game-created.png" alt="创建成功" /></p>
+<p>游戏 ID 后续提审与版本管理都会用到,在列表第一列查看。此时游戏尚未上架,下一步是开发双端产物并提交第一个版本,见<a href="dev/quick-start.html">快速开始</a>与<a href="dev/review.html">提交与审核</a>。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="游戏逻辑开发"><a class="header" href="#游戏逻辑开发">游戏逻辑开发</a></h1>
+<p>游戏逻辑运行在平台的隔离运行时中,使用 TypeScript 或 JavaScript 编写,TypeScript 编译目标为 ES5,最终构建为单文件 IIFE bundle 提交。</p>
+<h2 id="双-sdk"><a class="header" href="#双-sdk">双 SDK</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>SDK</th><th>运行位置</th><th>用途</th></tr></thead><tbody>
+<tr><td><code>@game-platform/backend-sdk</code></td><td>平台游戏逻辑运行时</td><td>提供生命周期基类与 platform API 类型,编写权威玩法逻辑</td></tr>
+<tr><td><code>@game-platform/frontend-sdk</code></td><td>游戏前端</td><td>封装宿主协议、WebSocket 连接、重连与事件分发</td></tr>
+</tbody></table>
+</div>
+<h2 id="生命周期"><a class="header" href="#生命周期">生命周期</a></h2>
+<p>继承 <code>GameLifecycle</code> 并重写需要的钩子,最后调用 <code>registerGame()</code> 注册:</p>
+<pre><code class="language-typescript">import { GameLifecycle, registerGame } from '@game-platform/backend-sdk'
+
+class MyGame extends GameLifecycle {
+  // 会话准备就绪,初始化牌桌与座位,此时玩家尚未进入对局。
+  onInit(): void {}
+
+  // 玩家进入或重连,可用于落座、夺回被托管的座位。
+  onPlayerJoin(playerId: string, displayName: string): void {}
+
+  // 玩家最后一条连接断开,成员资格保留,建议将座位交给托管逻辑。
+  onPlayerLeave(playerId: string): void {}
+
+  // 玩家玩法动作,仅在会话进入 playing 后被调用。
+  onAction(playerId: string, action: string, payload: any): void {}
+
+  // 平台状态快照拉取,首次进入、重连、页面恢复可见均可触发。
+  // 必须用 platform.sendTo 回应本人全量状态。
+  onSync(playerId: string): void {}
+
+  // 会话结束,做最终结算与收尾。
+  onFinish(): void {}
+}
+
+registerGame(new MyGame())
+</code></pre>
+<p>调用时序:</p>
+<pre><code class="language-text">会话准备就绪:      onInit()
+玩家进出:          onPlayerJoin 与 onPlayerLeave 循环触发
+会话进入 playing:  动作开始受理,循环:
+                    onAction(playerId, action, payload)
+                      └─ broadcast 或 sendTo 下发事件
+                    onSync(playerId),状态拉取随时可能发生
+会话结束:          onFinish()
+</code></pre>
+<p>注意:</p>
+<ul>
+<li>onInit 阶段不要假设玩家已落座;onAction 之前一定已收到对应玩家的 onPlayerJoin。</li>
+<li>onSync 是玩家对账的唯一通道,必须实现。断线重连、切换标签页、补发状态都依赖它。</li>
+<li>运行时还支持一个可选的全局 <code>onStart()</code>:会话进入 playing 时若已定义则被调用,适合满员即开局的玩法触发第一手动作。建议在模块顶层直接定义该函数,不经过 <code>registerGame</code>。</li>
+<li>建议所有钩子无副作用地可重入,同一玩家重连会再次触发 onPlayerJoin。</li>
+</ul>
+<h2 id="platform-api"><a class="header" href="#platform-api">platform API</a></h2>
+<p>platform 为运行时注入的全局对象,完整清单如下。</p>
+<p><strong>通信</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>API</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>broadcast(event, data?)</code></td><td>向会话内所有成员含观战者广播事件</td></tr>
+<tr><td><code>sendTo(playerId, event, data?)</code></td><td>向指定玩家定向发送,非成员静默忽略</td></tr>
+<tr><td><code>getPlayers()</code></td><td>返回玩家名册,内容为初始化时的快照,后续加入者经 onPlayerJoin 通知</td></tr>
+<tr><td><code>isPlayerOnline(playerId)</code></td><td>判断玩家当前是否有存活连接,用于区分离席与后台标签页</td></tr>
+<tr><td><code>finishSession()</code></td><td>在干净边界结束整个会话并释放房间,例如一手结束且无人在线</td></tr>
+<tr><td><code>reopenSession()</code></td><td>对局刚结束且有空位时,将会话退回等待态,允许新玩家凭码加入</td></tr>
+</tbody></table>
+</div>
+<p><strong>状态</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>API</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>getGameState(key)</code> / <code>setGameState(key, value)</code></td><td>会话级键值存储,会话结束即销毁,不持久化</td></tr>
+<tr><td><code>random()</code></td><td>密码学安全随机数,取值区间为 0 到 1 左闭右开</td></tr>
+<tr><td><code>log(...args)</code></td><td>服务端日志,用于排障</td></tr>
+<tr><td><code>setTimeout</code> / <code>setInterval</code> / <code>clearTimer</code></td><td>定时器,会话结束时统一清理</td></tr>
+</tbody></table>
+</div>
+<p><strong>结算</strong>,详见<a href="dev/funds.html">资金接入</a>:</p>
+<div class="table-wrapper"><table><thead><tr><th>API</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>beginRound()</code> / <code>endRound()</code></td><td>开启与提交业务回合,分别返回回合 ID 与提交结果</td></tr>
+<tr><td><code>deductBalance(playerId, amount, desc?)</code></td><td>回合内登记扣款</td></tr>
+<tr><td><code>rewardBalance(playerId, amount, desc?)</code></td><td>回合内登记奖励</td></tr>
+<tr><td><code>recordResult(playerId, result, scoreDelta?, meta?)</code></td><td>回合内登记对局结果,result 为 win、lose 或 draw,另可带分数变化与不超过 255 字符的补充说明。写入玩家个人中心的对局记录,同一回合对同一玩家重复调用以后一次为准</td></tr>
+<tr><td><code>getBalance(playerId)</code></td><td>本地缓存余额,可能滞后,禁止用于扣款前预检</td></tr>
+<tr><td><code>getBalanceVersion(playerId)</code></td><td>本引擎最近一次提交的余额版本号,随结果下发,用于客户端丢弃乱序推送</td></tr>
+<tr><td><code>lastRoundError()</code></td><td>读取最近一次回合提交失败原因</td></tr>
+<tr><td><code>getRoundId()</code></td><td>当前回合 ID,无回合时为空串</td></tr>
+</tbody></table>
+</div>
+<p><strong>公平随机</strong>,详见<a href="dev/funds.html">资金接入</a>:</p>
+<div class="table-wrapper"><table><thead><tr><th>API</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>beginFairRound(seedId)</code></td><td>生成保密种子并向全员广播其 SHA-256 承诺,返回承诺值</td></tr>
+<tr><td><code>getFairRandom(seedId, index)</code></td><td>从公平种子派生第 index 个随机数</td></tr>
+<tr><td><code>revealFairRound(seedId)</code></td><td>结算后公开种子,全员可复算随机过程</td></tr>
+</tbody></table>
+</div>
+<h2 id="运行约束"><a class="header" href="#运行约束">运行约束</a></h2>
+<p>以下为运行时的硬性约束,提审与运行均按此校验:</p>
+<div class="table-wrapper"><table><thead><tr><th>约束</th><th>值</th><th>说明</th></tr></thead><tbody>
+<tr><td>bundle 大小</td><td>≤ 512 KiB</td><td>超出拒绝提审</td></tr>
+<tr><td>字符编码</td><td>必须 UTF-8</td><td></td></tr>
+<tr><td>禁用能力</td><td>eval、动态 import、require、process.env、Function 构造器、fetch、XMLHttpRequest、WebSocket、DOM 与 BOM 全局</td><td>bundle 中出现 eval、import、require、process.env、this.constructor 直接拒审,运行环境中上述全局均不可用</td></tr>
+<tr><td>随机数</td><td>必须使用 platform.random 或公平随机接口</td><td>Math.random 已被替换为密码学安全源,涉及资金的逻辑禁止自行引入可预测随机</td></tr>
+<tr><td>单次回调耗时</td><td>≤ 2 秒</td><td>任一钩子或定时器回调超时,会话立即进入 error 终态并全员收到错误事件,必须控制搜索与 AI 算法复杂度,采用节点预算加兜底策略</td></tr>
+<tr><td>回合闭合</td><td>必须在钩子返回前调用 endRound</td><td>钩子返回时仍有未闭合回合,本轮全部资金操作作废并产生会话错误</td></tr>
+<tr><td>状态存储</td><td>会话内存级</td><td>setGameState 不落盘,需要跨局保留的数据不得依赖它</td></tr>
+</tbody></table>
+</div>
+<p>建议开局阶段的状态全部通过事件广播下发,事件携带完整公共快照,使观战者与中途进入者无需补发即可重建局面。超大快照随每条事件全量携带的成本远低于维护增量补发逻辑。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="游戏前端开发"><a class="header" href="#游戏前端开发">游戏前端开发</a></h1>
+<p>游戏前端运行在大厅 iframe 中,是常规 Web 工程,构建产物打包为 zip 提交。通过前端 SDK 完成全部接入:</p>
+<pre><code class="language-typescript">import { GameClient, GameLifecycle, requestHostGameConfig, notifyGameExit } from '@game-platform/frontend-sdk'
+
+class MyGameView extends GameLifecycle {
+  onConnect() { /* WS 已建立 */ }
+  onSessionJoin(sessionId, playerCount) { /* 已加入会话 */ }
+  onStart(data) { /* 进入对局,开始受理操作 */ }
+  onEvent(action, payload) { /* 游戏自定义事件 */ }
+  onFinish(data) { /* 终局展示 */ }
+  onError(error) { /* 错误提示 */ }
+}
+
+// 1. 向大厅宿主索取连接配置,自动处理 origin 校验
+const config = await requestHostGameConfig()
+
+// 2. 创建客户端并连接,SDK 每次连接与重连自动索取一次性票据
+const client = new GameClient({
+  url: config.wsUrl,
+  gameId: config.gameId,
+  ticketProvider: config.requestTicket,
+  sessionId: config.sessionId,
+  roomCode: config.roomCode,
+  spectate: config.spectate,
+})
+client.use(new MyGameView())
+await client.connect()
+
+// 3. 发送玩法动作,对局开始后
+client.sendAction('move', { from: 12, to: 34 })
+
+// 4. 游戏自身返回按钮触发时,通知大厅返回
+notifyGameExit()
+</code></pre>
+<p>禁止在游戏前端内自行实现返回大厅逻辑,统一使用 <code>notifyGameExit()</code> 由大厅决定返回方式。</p>
+<p>GameClient 其余方法:<code>ready()</code> 就绪、<code>start()</code> 开始,房间模式房主使用、<code>finish()</code> 结束、<code>sync()</code> 拉取权威快照、<code>disconnect()</code> 断开、<code>isConnected()</code> 查询连接状态。</p>
+<p>生命周期可选钩子共 12 个:<code>onConnect</code>、<code>onSessionJoin(sessionId, playerCount)</code>、<code>onSpectate</code>、<code>onReady</code>、<code>onStart</code>、<code>onEvent(action, payload)</code>、<code>onPlayerAction(playerId, action, payload)</code>、<code>onFinish</code>、<code>onError(error)</code>、<code>onDisconnect</code>、<code>onReconnectFailed</code>、<code>onStateChange(state)</code>,签名以 SDK 类型声明为准。</p>
+<p>连接策略:SDK 默认自动重连,间隔 3 秒,最多 5 次,重连耗尽触发 <code>onReconnectFailed</code>。建议保留默认值,页面重新可见时调用 <code>client.sync()</code> 对账,替代任何轮询。</p>
+<h2 id="平台系统消息"><a class="header" href="#平台系统消息">平台系统消息</a></h2>
+<p>除游戏自定义事件外,平台经 WebSocket 下发系统级消息,未显式处理的统一进入 onEvent:</p>
+<div class="table-wrapper"><table><thead><tr><th>消息</th><th>载荷</th><th>处理要求</th></tr></thead><tbody>
+<tr><td><code>session:started</code></td><td>sessionId, playerCount</td><td>进入对局并开启操作,已映射到 onStart</td></tr>
+<tr><td><code>session:finished</code></td><td>sessionId</td><td>终局,已映射到 onFinish</td></tr>
+<tr><td><code>session:member_left</code></td><td>sessionId, playerId</td><td>有玩家离席,建议展示等待归队或托管中</td></tr>
+<tr><td><code>session:timeout</code></td><td>sessionId</td><td>会话超时结束,展示对应提示</td></tr>
+<tr><td><code>error</code></td><td>message</td><td>平台或游戏逻辑错误,展示并允许重试 sync</td></tr>
+<tr><td><code>wallet:balance</code></td><td>balance, version, source</td><td>余额实时推送,必须按 version 单调守卫,只应用比本地新的版本,防止乱序回退</td></tr>
+<tr><td><code>wallet:error</code></td><td>requestId, roundId, error</td><td>结算被拒,展示具体原因</td></tr>
+<tr><td><code>fair:commitment</code></td><td>seedId, commitment</td><td>公平随机承诺,存档供终局验证</td></tr>
+<tr><td><code>fair:reveal</code></td><td>seedId, seed, commitment, draws</td><td>种子揭示,校验 <code>SHA-256('fair-seed:' + seed)</code> 与承诺一致后可复算随机过程</td></tr>
+</tbody></table>
+</div>
+<p>建议游戏结果载荷中携带游戏逻辑写入的 roundId 与 <code>getBalanceVersion()</code> 版本号。客户端应用结果时同步抬高余额水位,使早于结果的余额推送被正确丢弃。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="事件与协议规范"><a class="header" href="#事件与协议规范">事件与协议规范</a></h1>
+<p>多数场景下前端 SDK 已完成协议封装,本章供自研客户端与深度排障使用。</p>
+<h2 id="websocket-消息信封"><a class="header" href="#websocket-消息信封">WebSocket 消息信封</a></h2>
+<p>平台使用统一信封,游戏开发通常无需直接操作,SDK 已封装:</p>
+<pre><code class="language-json">{
+  "type": "event",
+  "action": "poker:deal",
+  "payload": { },
+  "timestamp": 1769000000000,
+  "seq": 42,
+  "playerId": "…",
+  "gameId": "…",
+  "sessionId": "…"
+}
+</code></pre>
+<ul>
+<li>type 分为 event、action、system 三类。客户端只发送 action 与 system,seq 用于服务端去重,重发同一动作不会重复执行。</li>
+<li>单帧上限 64 KiB,禁止在单个动作或广播载荷中携带超大对象。</li>
+</ul>
+<h2 id="命名规范"><a class="header" href="#命名规范">命名规范</a></h2>
+<ul>
+<li>游戏自定义事件必须使用 <code>&lt;游戏前缀&gt;:&lt;事件名&gt;</code> 命名空间,例如 <code>xq:move</code>,避免与其他游戏及平台消息冲突。</li>
+<li>玩家动作必须使用小写 snake_case,例如 move、draw、discard。</li>
+<li>载荷字段统一 snake_case。</li>
+<li>禁止复用 session、wallet、fair、error、state:sync 等平台保留前缀与名称。</li>
+</ul>
+<h2 id="连接建立"><a class="header" href="#连接建立">连接建立</a></h2>
+<pre><code class="language-text">1. 携带玩家访问令牌换取一次性票据:
+   POST /game/ws/ticket      Authorization: Bearer &lt;accessToken&gt;
+   → { "ticket": "…" }      票据单次有效,30 秒过期
+
+2. 建立 WebSocket:
+   GET /game/ws?ticket=&lt;ticket&gt;&amp;gameId=&lt;gameId&gt;
+       [&amp;sessionId=&lt;sessionId&gt; | &amp;roomCode=&lt;roomCode&gt;]
+       [&amp;spectate=1]
+</code></pre>
+<p>连接成功后服务端下发 <code>session:joined</code>,观战则下发 <code>session:spectating</code>。票据无效或过期时升级请求被拒绝,响应头 <code>X-Error-Code</code> 为 401005;SDK 会自动重新索取票据。</p>
+<h2 id="客户端-system-消息"><a class="header" href="#客户端-system-消息">客户端 system 消息</a></h2>
+<p>客户端只发送 action 与 system 两类消息。system 消息由平台网关处理,不进入游戏逻辑,前端 SDK 已封装为对应方法,自研客户端直接发送:</p>
+<div class="table-wrapper"><table><thead><tr><th>消息</th><th>SDK 方法</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>session:ready</code></td><td><code>ready()</code></td><td>quick 模式申报就绪;人数满员时平台也会代发,重复发送幂等</td></tr>
+<tr><td><code>session:start</code></td><td><code>start()</code></td><td>room 模式房主开局</td></tr>
+<tr><td><code>session:finish</code></td><td><code>finish()</code></td><td>主动结束会话</td></tr>
+<tr><td><code>state:sync</code></td><td><code>sync()</code></td><td>拉取本人权威快照,平台路由到游戏逻辑的 <code>onSync</code></td></tr>
+</tbody></table>
+</div>
+<h2 id="会话状态机"><a class="header" href="#会话状态机">会话状态机</a></h2>
+<pre><code class="language-text">created → waiting → ready → playing → finished
+                              ↘ error / timeout 终态
+</code></pre>
+<p>前端通过 <code>session:state</code> 消息与 onStateChange 感知状态流转。玩法动作仅在 playing 状态被受理。</p>
+<h2 id="房间模式-rest"><a class="header" href="#房间模式-rest">房间模式 REST</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>接口</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>POST /game/:id/room</code></td><td>创建房间,响应含 sessionId、roomCode、minPlayer、maxPlayer、reused。同一房主已有房间则复用,reused 为 true</td></tr>
+<tr><td><code>GET /game/:id/room/:roomCode?after=&lt;gen&gt;</code></td><td>等待室状态长轮询,响应含 state、owner、players、gen、isOwner。gen 变化立即返回,最多挂起 25 秒</td></tr>
+<tr><td><code>POST /game/:id/room/:roomCode/start</code></td><td>房主开局,要求人数达标,响应 state 为 playing</td></tr>
+</tbody></table>
+</div>
+<p>客人加入不走 REST,直接以 roomCode 参数建立 WebSocket。房间码为 6 位大写字符,已去除易混淆字符。</p>
+<h2 id="断线重连与离席"><a class="header" href="#断线重连与离席">断线重连与离席</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>机制</th><th>行为</th></tr></thead><tbody>
+<tr><td>同账号多端</td><td>允许多端多标签并存,各自独立连接</td></tr>
+<tr><td>断线重连</td><td>携相同 sessionId 或 roomCode 重连即回到会话,随后通过 sync 拉取权威快照,座位仍保留</td></tr>
+<tr><td>离席判定</td><td>最后一条连接断开且无其他在线连接时触发 onPlayerLeave,多标签场景平台已去重。网络中断等异常断开最迟 2 分钟内判定</td></tr>
+<tr><td>会话生命周期</td><td>会话最长存活 2 小时,超时进入 timeout 终态并广播 session:timeout</td></tr>
+</tbody></table>
+</div>
+<p>建议游戏逻辑在 onPlayerLeave 时将离席座位转为托管而非立即终局,在 onPlayerJoin 时归还控制权,可获得最好的断线体验。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="资金接入"><a class="header" href="#资金接入">资金接入</a></h1>
+<h2 id="回合模型"><a class="header" href="#回合模型">回合模型</a></h2>
+<p>一切资金变动必须包裹在显式回合中。平台不会隐式创建回合,无活跃回合时扣款与奖励登记返回 false,且不产生任何流水。</p>
+<pre><code class="language-text">游戏前端 ──动作: settle {fee:100}──▶ 游戏逻辑
+   beginRound 得到回合 ID
+   deductBalance 扣除 100
+   按玩法规则计算奖励
+   rewardBalance 发放奖励
+   endRound 提交 ──▶ 平台钱包,整回合原子生效 ──▶ 余额推送 wallet:balance
+游戏逻辑 ──广播 game:settled {roundId, balanceVersion}──▶ 游戏前端
+</code></pre>
+<p>标准代码模式:</p>
+<pre><code class="language-typescript">onAction(playerId: string, action: string, payload: any) {
+  if (action !== 'settle') return
+  const roundId = platform.beginRound()
+  if (!roundId) return                    // 已有未闭合回合,忽略本次
+  let committed = false
+  try {
+    platform.deductBalance(playerId, payload.fee, `settle ${roundId}`)
+    const prize = this.rewardOf(playerId) // 按玩法规则计算奖励,使用公平随机
+    if (prize &gt; 0) platform.rewardBalance(playerId, prize, 'settle reward')
+    platform.recordResult(playerId, prize &gt; payload.fee ? 'win' : 'lose',
+                          prize - payload.fee)          // 登记对局记录
+  } finally {
+    committed = platform.endRound()       // 无论中途何种分支,回合必须闭合
+  }
+  if (!committed) {
+    // 提交失败:读取失败原因,向玩家说明,并回滚本局状态
+    platform.sendTo(playerId, 'game:error', { reason: platform.lastRoundError() })
+    return
+  }
+  platform.broadcast('game:settled', {
+    player_id: playerId,
+    round_id: roundId,
+    balance_version: platform.getBalanceVersion(playerId),
+  })
+}
+</code></pre>
+<p>完整结算链路:</p>
+<pre class="mermaid">sequenceDiagram
+    participant F as 游戏前端
+    participant G as WebSocket 网关
+    participant E as 游戏逻辑(平台运行时)
+    participant P as 平台钱包
+
+    F-&gt;&gt;G: action: settle {fee}
+    G-&gt;&gt;E: onAction(playerId, &quot;settle&quot;, payload)
+    E-&gt;&gt;E: beginRound() 生成 roundId
+    E-&gt;&gt;E: deductBalance / rewardBalance 仅登记,不动账
+    E-&gt;&gt;P: endRound() 提交整组操作(原子,超时 15 秒)
+    alt 提交成功
+        P--&gt;&gt;E: 结算完成,余额与版本号更新
+        E--&gt;&gt;F: broadcast game:settled {round_id, balance_version}
+        P--&gt;&gt;F: wallet:balance {balance, version} 实时推送
+    else 提交失败(如余额不足)
+        P--&gt;&gt;E: 失败原因
+        E-&gt;&gt;F: sendTo game:error {reason: lastRoundError()}
+        P--&gt;&gt;F: wallet:error {requestId, roundId, error}
+    end
+</pre>
+<p>规则:</p>
+<ul>
+<li>必须遵循 beginRound、登记、endRound 的顺序。endRound 返回 true 之前,不得视任何扣款与奖励为生效。</li>
+<li>必须处理 endRound 返回 false 的分支:读取 lastRoundError,恢复对局前状态,并让玩家知晓。</li>
+<li>金额为 64 位整数金币。小数会被静默截断,NaN、Infinity 与非正数直接拒绝。禁止依赖超过 2 的 53 次方的数值,那是 JS 的精度边界。</li>
+<li>一个引擎同一时刻只允许一个活跃回合。批量结算类玩法在一回合内逐人登记即可。</li>
+<li>回合提交为整组原子:任一操作失败,整回合全部回滚,并逐操作下发 wallet:error。设计玩法时避免跨回合的半结算状态。</li>
+</ul>
+<h2 id="幂等与安全"><a class="header" href="#幂等与安全">幂等与安全</a></h2>
+<ul>
+<li>玩家动作重复发送时,平台按玩家与动作序号去重,动作内产生的资金操作自动幂等,不会重复记账。</li>
+<li>回合 ID 只能由 beginRound 在服务端生成。禁止接受前端载荷中的任何回合标识作为结算依据。</li>
+<li>全部回合操作落审计账,含回合表与逐操作表,可供平台回溯与对局回放,每回合最多录制 500 条广播事件。</li>
+</ul>
+<h2 id="余额显示"><a class="header" href="#余额显示">余额显示</a></h2>
+<p>游戏内余额显示的唯一权威是平台的 <code>wallet:balance</code> 版本化推送,配合结算结果中的版本号使用:</p>
+<ol>
+<li>收到 <code>wallet:balance</code> 时,仅当 version 大于本地水位才更新显示并抬高水位。</li>
+<li>收到结算结果时,应用结果携带的 balance_version,将水位至少抬到该值,丢弃此前积压的旧推送。</li>
+<li>页面恢复可见或重连后,调用 <code>client.sync()</code> 拉取权威快照对账。</li>
+</ol>
+<p>禁止轮询余额接口,平台推送链路已覆盖对局、充值、平台发放、管理调账等全部余额变更来源。</p>
+<p><code>platform.getBalance()</code> 返回引擎本地缓存,可能滞后于权威值。必须将其用于展示与体验优化,禁止用于扣款前预检。余额不足应在 endRound 之后经 lastRoundError 统一处理,平台结算时的校验才是权威。</p>
+<h2 id="公平随机"><a class="header" href="#公平随机">公平随机</a></h2>
+<p>涉及随机结果的玩法,例如洗牌、随机事件判定,必须使用平台的 commit-reveal 公平随机接口,使玩家可以独立验证随机过程未被篡改:</p>
+<pre><code class="language-typescript">const seedId = 'fair:' + roundId
+const commitment = platform.beginFairRound(seedId)   // 先广播承诺,再消费任何随机数
+if (!commitment) { /* 熵源失败,取消本局 */ }
+
+const point = Math.floor(platform.getFairRandom(seedId, 0) * DECK_SIZE)
+// … 按玩法规则结算 …
+platform.revealFairRound(seedId)                     // 揭示种子,玩家可复算
+</code></pre>
+<p>验证算法,玩家侧可完整复算:</p>
+<ul>
+<li>承诺值为 <code>SHA-256("fair-seed:" + seed)</code> 的十六进制串。</li>
+<li>派生随机数取 <code>SHA-256(seed + ":" + index)</code> 结果的前 53 位除以 2 的 53 次方,得到 0 到 1 左闭右开区间上的均匀分布。同一 seedId 可派生多次独立抽取。</li>
+<li>时序要求:必须在消费任何随机数之前调用 beginFairRound,承诺先行;结算完成后、回合闭合前调用 revealFairRound。</li>
+<li>每个引擎实例最多保存 64 个未揭示种子,先进先出淘汰。建议一回合一种子,用后即揭示。</li>
+</ul>
+<h2 id="rtp-申报与漂移核查"><a class="header" href="#rtp-申报与漂移核查">RTP 申报与漂移核查</a></h2>
+<p>依赖随机结果的玩法,提审时应通过 <code>rtpDeclared</code>(期望回报率,两位小数,如 95.00)与 <code>rakeRateDeclared</code>(平台抽成)申报玩法参数,字段说明见<a href="dev/review.html">提交与审核</a>。</p>
+<p>平台每日核对实际运行数据与申报值,满足以下全部条件时自动创建风控案件并进入平台核查流程,同一游戏已有未处理案件时不重复创建:</p>
+<div class="table-wrapper"><table><thead><tr><th>条件</th><th>阈值</th></tr></thead><tbody>
+<tr><td>总投注</td><td>≥ 100000 金币</td></tr>
+<tr><td>结算回合数</td><td>≥ 100</td></tr>
+<tr><td>实际 RTP 与申报值偏差</td><td>&gt; 2 个百分点</td></tr>
+</tbody></table>
+</div>
+<p>请确保申报值与真实玩法参数一致;调整玩法回报参数后,新版本提审时应同步更新申报值。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="提交与审核"><a class="header" href="#提交与审核">提交与审核</a></h1>
+<h2 id="游戏包构成"><a class="header" href="#游戏包构成">游戏包构成</a></h2>
+<p>一个可提审的游戏版本由两部分组成,可只更新其中之一:</p>
+<div class="table-wrapper"><table><thead><tr><th>组成</th><th>形式</th><th>上传方式</th></tr></thead><tbody>
+<tr><td>前端包</td><td>zip 压缩包,构建产物</td><td>先上传获得 URL,再随提审单提交</td></tr>
+<tr><td>游戏逻辑包</td><td>单文件 JS bundle 全文</td><td>随提审单以字符串提交</td></tr>
+</tbody></table>
+</div>
+<p>前端包硬性要求:</p>
+<ul>
+<li>zip 原始大小不超过 25 MB,解压后总大小不超过 75 MB,文件数不超过 2000。</li>
+<li>必须在 zip 根目录包含 index.html 入口文件。</li>
+<li>必须为纯静态资源,不依赖任何服务端能力。SPA 路由请使用 hash 模式。</li>
+</ul>
+<p>游戏逻辑包硬性要求见<a href="dev/game-backend.html">游戏逻辑开发</a>的运行约束一节。</p>
+<h2 id="上传前端包"><a class="header" href="#上传前端包">上传前端包</a></h2>
+<pre><code class="language-text">POST /api/admin/game/:id/frontend-bundle
+Content-Type: multipart/form-data
+
+version: 1.0.0
+file: dist.zip
+</code></pre>
+<p>响应:</p>
+<pre><code class="language-json">{
+  "frontendBundleUrl": "https://example.com/frontend/&lt;gameId&gt;/1.0.0/&lt;uuid&gt;/index.html",
+  "bundleHash": "&lt;zip 字节的 SHA-256 十六进制串&gt;"
+}
+</code></pre>
+<p>bundleHash 与 URL 需要在提审单中原样带回,作为该版本内容的存证。</p>
+<h2 id="提交审核"><a class="header" href="#提交审核">提交审核</a></h2>
+<pre><code class="language-text">POST /api/admin/game/:id/package
+</code></pre>
+<pre><code class="language-json">{
+  "version": "1.0.0",
+  "frontendBundleUrl": "https://example.com/…",
+  "bundleHash": "…",
+  "backendJsBundle": "…",
+  "rtpDeclared": 95.00,
+  "rakeRateDeclared": 2.00
+}
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>字段</th><th>说明</th></tr></thead><tbody>
+<tr><td>version</td><td>必填,1–50 字符,建议语义化版本</td></tr>
+<tr><td>frontendBundleUrl</td><td>首次提审必填,更新时留空表示沿用上一版本</td></tr>
+<tr><td>bundleHash</td><td>与前端包对应</td></tr>
+<tr><td>backendJsBundle</td><td>bundle 全文,首次提审必填,更新时留空表示沿用上一版本</td></tr>
+<tr><td>rtpDeclared</td><td>选填,期望回报率,两位小数,如 96.50。依赖随机结果的玩法应申报,平台据此做漂移核查</td></tr>
+<tr><td>rakeRateDeclared</td><td>选填,平台抽成,两位小数,如 2.00</td></tr>
+</tbody></table>
+</div>
+<p>除接口外,也可登录开发商后台在游戏版本页以表单提交:前端包与逻辑包均支持"继承上一版本 / 上传文件 / 手动填写 URL"三种方式,表单内同屏填写申报参数。</p>
+<p>增量提交规则:</p>
+<ul>
+<li>首次提审必须同时包含前端包与游戏逻辑包。</li>
+<li>后续版本可只提交变更的一侧,未提交侧自动继承上一已提交版本,并在包记录中标注来源版本,便于审核聚焦变更内容。</li>
+<li>两侧均未变更的提交会被拒绝,错误码 400332。</li>
+</ul>
+<p>提交后版本进入 pending_review,响应为完整包记录,含包 ID、状态与继承标记,可通过 <code>GET /api/admin/game/:id/package</code> 查询全部历史版本。RTP 申报的核查规则见<a href="dev/funds.html">资金接入</a>。</p>
+<h2 id="审核范围"><a class="header" href="#审核范围">审核范围</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>审核项</th><th>说明</th></tr></thead><tbody>
+<tr><td>安全</td><td>游戏逻辑包静态扫描禁用能力,前端包解压安全,防范路径穿越与压缩炸弹</td></tr>
+<tr><td>合规</td><td>无外联、无第三方广告与支付、无诱导跳转,玩法参数申报合理</td></tr>
+<tr><td>资金</td><td>回合模型使用正确,无绕过回合的资金操作,失败分支处理完整</td></tr>
+<tr><td>体验</td><td>断线重连、状态同步、离席处理、错误提示完整可用</td></tr>
+<tr><td>联机</td><td>人数配置与会话模式同玩法匹配,匹配参数合理</td></tr>
+</tbody></table>
+</div>
+<p>首个版本审核通过后立即自动发布,游戏转为 approved 并出现在大厅,无需另行上架操作。审核意见与驳回原因在包记录的 reviewComment 字段返回。</p>
+<pre class="mermaid">sequenceDiagram
+    participant D as 开发商
+    participant A as 管理后台
+    participant R as 平台审核
+    participant L as 大厅与网关
+
+    D-&gt;&gt;A: 上传前端包 (frontend-bundle)
+    A--&gt;&gt;D: frontendBundleUrl + bundleHash
+    D-&gt;&gt;A: 提交版本 (package)
+    A-&gt;&gt;A: 逻辑包静态扫描(≤512 KiB、禁用能力)
+    A--&gt;&gt;R: 版本进入 pending_review
+    R-&gt;&gt;A: 审核 {action: approved | rejected}
+    alt 通过
+        A-&gt;&gt;L: 写回线上版本并失效各节点缓存
+        Note over L: 新对局使用新版本,进行中对局继续用旧版本至结束
+    else 驳回
+        A--&gt;&gt;D: 包记录携带 reviewComment,修改后重新提审
+    end
+</pre>
+<h2 id="版本更新与回滚"><a class="header" href="#版本更新与回滚">版本更新与回滚</a></h2>
+<ul>
+<li><strong>更新</strong>:重复上传与提审流程,审核通过即全量替换线上版本。进行中的对局继续使用旧版本直至结束,新对局使用新版本。</li>
+<li><strong>回滚</strong>:任一已过审版本可随时切换回线上,接口为 <code>POST /api/admin/game/:id/package/:pid/switch</code>,目标包须为 approved 状态。游戏归档状态下不允许切换版本。</li>
+</ul>
+<h2 id="平台侧发布脚本"><a class="header" href="#平台侧发布脚本">平台侧发布脚本</a></h2>
+<p>平台运营代开发商发布时,可用平台侧脚本一键完成上传、提审与过审发布:</p>
+<pre><code class="language-bash">ADMIN_API=https://game.zihua-chen.cn ADMIN_USER=admin ADMIN_PASS=… \
+  ./scripts/publish-game.sh &lt;gameId&gt; &lt;version&gt; &lt;前端dist目录&gt; &lt;backend/dist/game.js&gt; [rtp] [rake]
+</code></pre>
+<p>开发商账号无审核权限,日常请走后台表单提审,也可按上述接口以脚本方式完成。注意过审即发布,逻辑包必须随包重提,只传前端包的版本不会更新服务端逻辑。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="本地开发与自测"><a class="header" href="#本地开发与自测">本地开发与自测</a></h1>
+<h2 id="环境说明"><a class="header" href="#环境说明">环境说明</a></h2>
+<p>平台当前没有独立 Sandbox 环境,开发与验证按以下方式组织:</p>
+<div class="table-wrapper"><table><thead><tr><th>环境</th><th>用途</th><th>说明</th></tr></thead><tbody>
+<tr><td>本地工程</td><td>日常开发</td><td>自备 Node.js 20 与 npm,双 SDK 以源码包引入工程,本地构建产物</td></tr>
+<tr><td>线上平台</td><td>集成验证</td><td>唯一真实运行环境。平台金币为虚拟物品、支付为沙箱模拟,测试玩家与真实玩家同环境,但资金无真实价值</td></tr>
+</tbody></table>
+</div>
+<p>游戏前端单独打开(无平台宿主)时无法获取连接配置,页面停在等待宿主状态属预期行为;完整链路验证必须经平台大厅进入。</p>
+<h2 id="本地自检"><a class="header" href="#本地自检">本地自检</a></h2>
+<p>提审前对构建产物做以下自检,全部通过再提交:</p>
+<pre><code class="language-bash"># 1. 逻辑包体积 ≤ 512 KiB,且为 UTF-8 编码
+ls -l backend/dist/game.js
+
+# 2. 逻辑包不含禁用关键字(平台按大小写不敏感扫描),出现即直接拒审
+grep -inE 'eval\(|import\(|require\(|process\.env|this\.constructor' backend/dist/game.js
+
+# 3. 前端包根目录含 index.html,zip ≤ 25 MB
+unzip -l frontend/dist.zip | head
+</code></pre>
+<p>逻辑包内禁止出现 fetch、XMLHttpRequest、WebSocket、DOM 等能力,本地构建时如引用了这些全局,提交前一并排查。</p>
+<h2 id="提审前自测要点"><a class="header" href="#提审前自测要点">提审前自测要点</a></h2>
+<p>以下场景在提审前应至少完整走过一遍:</p>
+<ul>
+<li>单人开局、满员自动开局、人数不足补位。</li>
+<li>断线重连后状态恢复,即 onSync 路径。</li>
+<li>离席托管与归队夺回。</li>
+<li>余额不足时 endRound 失败分支与玩家提示。</li>
+<li>公平随机承诺与揭示时序。</li>
+<li>定时器在会话结束时无残留。</li>
+</ul>
+<h2 id="版本迭代策略"><a class="header" href="#版本迭代策略">版本迭代策略</a></h2>
+<ul>
+<li>进行中的对局继续使用旧版本直至结束,新对局使用新版本,因此可以放心小步提审。</li>
+<li>每个版本只提交变更的一侧即可,另一侧自动继承。</li>
+<li>线上问题可随时回滚到任一已过审版本,见<a href="dev/review.html">提交与审核</a>。</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="错误处理"><a class="header" href="#错误处理">错误处理</a></h1>
+<h2 id="接口错误契约"><a class="header" href="#接口错误契约">接口错误契约</a></h2>
+<p>平台管理接口遵循统一错误契约(提审等脚本化调用同样适用):</p>
+<ul>
+<li>错误类别即 HTTP 状态码,400 参数错误、401 未认证、403 无权限、404 资源不存在、409 冲突、429 限流、5xx 服务端错误。</li>
+<li>每个响应带 <code>X-Error-Code</code> 头,成功为 0,失败为 6 位业务错误码。</li>
+<li>失败时另带 <code>X-Error-Message</code> 头,为 URL 编码的中文文案,响应体为空。</li>
+<li>判断逻辑一律以错误码为准,禁止解析文案文本。</li>
+</ul>
+<p>6 位错误码结构为 SSS DD Q:前 3 位为 HTTP 状态,第 4 位为业务域,0 通用、1 账号、2 玩家、3 开发商与游戏内容、4 资金、5 对局与工单,末 2 位为域内序号。</p>
+<h2 id="开发商高频错误码"><a class="header" href="#开发商高频错误码">开发商高频错误码</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>错误码</th><th>文案</th><th>处理建议</th></tr></thead><tbody>
+<tr><td><code>401002</code></td><td>访问令牌已过期</td><td>用刷新令牌换新后重放</td></tr>
+<tr><td><code>401005</code></td><td>对局连接凭证无效或已过期</td><td>WebSocket 票据单次有效 30 秒,重连时重新索取票据</td></tr>
+<tr><td><code>403104</code> / <code>403301</code></td><td>开发商账号已停用</td><td>联系平台</td></tr>
+<tr><td><code>429001</code></td><td>登录尝试过于频繁</td><td>每 IP 每分钟 30 次登录,失败 10 次锁 10 分钟,稍后再试</td></tr>
+<tr><td><code>400307</code></td><td>上架前必须先上传前端包</td><td>先完成前端包上传</td></tr>
+<tr><td><code>400308</code></td><td>上架前必须先通过至少一个版本的审核</td><td>先提审</td></tr>
+<tr><td><code>400328</code></td><td>上传文件校验失败</td><td>对照包规范自查</td></tr>
+<tr><td><code>400331</code></td><td>首次提审需同时上传前端包和后端包</td><td>补齐两侧</td></tr>
+<tr><td><code>400332</code></td><td>本次提交未包含新的包内容</td><td>至少更新一侧再提交</td></tr>
+<tr><td><code>400309</code></td><td>已归档游戏不能切换版本</td><td>先恢复上架</td></tr>
+<tr><td><code>400312</code></td><td>只能使用已过审的版本</td><td>仅可切换 approved 包</td></tr>
+<tr><td><code>400511</code></td><td>余额不足</td><td>游戏内提示余额不足并引导充值</td></tr>
+<tr><td><code>500501</code></td><td>游戏脚本执行超时</td><td>优化逻辑耗时,单次回调上限 2 秒</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="平台限制与接入清单"><a class="header" href="#平台限制与接入清单">平台限制与接入清单</a></h1>
+<h2 id="平台限制汇总"><a class="header" href="#平台限制汇总">平台限制汇总</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>项</th><th>限制</th></tr></thead><tbody>
+<tr><td>游戏逻辑 bundle</td><td>≤ 512 KiB,UTF-8,禁用 eval、动态 import、require、process.env、this.constructor</td></tr>
+<tr><td>前端包</td><td>zip ≤ 25 MB,解压 ≤ 75 MB,≤ 2000 文件,根目录含 index.html</td></tr>
+<tr><td>单次脚本回调</td><td>≤ 2 秒,超时会话进入 error 终态</td></tr>
+<tr><td>WS 单帧</td><td>≤ 64 KiB</td></tr>
+<tr><td>WS 票据</td><td>单次有效,30 秒过期</td></tr>
+<tr><td>金额</td><td>64 位整数金币,必须大于 0</td></tr>
+<tr><td>回合提交</td><td>提交超时 15 秒,整回合原子,失败全回滚</td></tr>
+<tr><td>未揭示公平种子</td><td>每引擎 64 个,先进先出</td></tr>
+<tr><td>对局回放</td><td>每回合 ≤ 500 条广播事件</td></tr>
+<tr><td>对局结果上报</td><td>recordResult 每回合 ≤ 64 条,同一玩家重复登记以后一次为准</td></tr>
+<tr><td>会话存活</td><td>最长 2 小时</td></tr>
+<tr><td>离席判定</td><td>正常断开即时,异常断开最迟 2 分钟</td></tr>
+<tr><td>广播、状态与定时器</td><td>无硬性配额。建议控制广播频率与快照体积,定时器在钩子内用完即清</td></tr>
+</tbody></table>
+</div>
+<h2 id="接入清单"><a class="header" href="#接入清单">接入清单</a></h2>
+<p>按接入阶段自查,全部勾完即可提审。</p>
+<h3 id="入驻与创建"><a class="header" href="#入驻与创建">入驻与创建</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+开发商账号注册完成并通过平台激活</li>
+<li><input disabled="" type="checkbox"/>
+游戏已创建,title、description、分类、缩略图齐备</li>
+<li><input disabled="" type="checkbox"/>
+sessionMode 与玩法匹配:对战类用 quick,好友组局用 room</li>
+<li><input disabled="" type="checkbox"/>
+minPlayer 与 maxPlayer 已按玩法确定,除特殊玩法外建议相等</li>
+</ul>
+<h3 id="游戏逻辑"><a class="header" href="#游戏逻辑">游戏逻辑</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+bundle 不超过 512 KiB,无禁用关键字,兼容 ES5</li>
+<li><input disabled="" type="checkbox"/>
+onSync 已实现,重连与切换标签页后可完整恢复</li>
+<li><input disabled="" type="checkbox"/>
+离席处理为座位托管或明确终局,不产生悬挂等待</li>
+<li><input disabled="" type="checkbox"/>
+算法在复杂局面下不会超过 2 秒回调上限</li>
+<li><input disabled="" type="checkbox"/>
+定时器在会话结束时清理,无残留</li>
+<li><input disabled="" type="checkbox"/>
+事件带游戏命名空间前缀,无平台保留名冲突</li>
+</ul>
+<h3 id="游戏前端"><a class="header" href="#游戏前端">游戏前端</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+zip 根目录含 index.html,使用 hash 路由,体积达标</li>
+<li><input disabled="" type="checkbox"/>
+通过 requestHostGameConfig 获取配置,未在游戏内硬编码任何地址</li>
+<li><input disabled="" type="checkbox"/>
+返回大厅统一使用 notifyGameExit</li>
+<li><input disabled="" type="checkbox"/>
+余额显示按 version 单调守卫,无轮询</li>
+<li><input disabled="" type="checkbox"/>
+页面恢复可见时调用 sync 对账</li>
+</ul>
+<h3 id="资金与公平"><a class="header" href="#资金与公平">资金与公平</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+所有资金流程包裹在 beginRound 与 endRound 之间</li>
+<li><input disabled="" type="checkbox"/>
+endRound 返回 false 的分支已处理,并向玩家展示失败原因</li>
+<li><input disabled="" type="checkbox"/>
+未以 getBalance 预检替代结算失败处理</li>
+<li><input disabled="" type="checkbox"/>
+随机类玩法使用公平随机,承诺先于抽取、结算后揭示</li>
+<li><input disabled="" type="checkbox"/>
+对局结果已通过 recordResult 上报</li>
+<li><input disabled="" type="checkbox"/>
+rtpDeclared 与 rakeRateDeclared 与真实玩法参数一致</li>
+</ul>
+<h3 id="本地自测"><a class="header" href="#本地自测">本地自测</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+单人开局、满员自动开局、人数不足补位已覆盖</li>
+<li><input disabled="" type="checkbox"/>
+断线重连后状态恢复正常</li>
+<li><input disabled="" type="checkbox"/>
+余额不足时的失败分支与提示已验证</li>
+<li><input disabled="" type="checkbox"/>
+公平随机承诺与揭示时序正确</li>
+</ul>
+<h3 id="提审与上线"><a class="header" href="#提审与上线">提审与上线</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+前端包上传成功,frontendBundleUrl 与 bundleHash 已存证</li>
+<li><input disabled="" type="checkbox"/>
+提审单包含逻辑包全文与申报参数</li>
+<li><input disabled="" type="checkbox"/>
+驳回意见处理完毕后重新提审</li>
+<li><input disabled="" type="checkbox"/>
+首版过审后已在大厅验证:列表可见、可进入、可完成一局完整结算</li>
+</ul>
+<h3 id="上线后运营"><a class="header" href="#上线后运营">上线后运营</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+RTP 漂移核查阈值内运行(见<a href="dev/funds.html">资金接入</a>)</li>
+<li><input disabled="" type="checkbox"/>
+线上问题按"新版本修复 + 必要时回滚"处理</li>
+</ul>
+<h2 id="常见驳回原因"><a class="header" href="#常见驳回原因">常见驳回原因</a></h2>
+<ol>
+<li>游戏逻辑依赖运行环境不提供的能力,如 fetch、DOM、eval。</li>
+<li>资金操作未闭合回合,或以 getBalance 预检代替结算失败处理。</li>
+<li>随机类玩法未使用公平随机,或时序错误,先取随机数后承诺。</li>
+<li>前端缺少 index.html,或使用 history 路由导致刷新 404。</li>
+<li>断线重连后无法恢复对局,未实现 onSync。</li>
+<li>算法在复杂局面下超过 2 秒回调上限。</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="常见问题-faq"><a class="header" href="#常见问题-faq">常见问题 FAQ</a></h1>
+<p>以上任一问题的答案都应在对应章节有展开说明;FAQ 未能覆盖的问题,请联系平台技术支持:QQ 597291437,邮箱 <a href="mailto:597291437@qq.com">597291437@qq.com</a>。</p>
+<h2 id="认证与连接"><a class="header" href="#认证与连接">认证与连接</a></h2>
+<p><strong>游戏前端需要处理玩家账号或密码吗?</strong>
+不需要,也接触不到。玩家凭证始终由大厅宿主持有,游戏前端只通过 postMessage 向宿主索取一次性 WebSocket 票据,票据单次有效、30 秒过期。前端 SDK 的 <code>ticketProvider</code> 已封装该流程。</p>
+<p><strong>平台有 App Secret 或接口签名吗?</strong>
+没有。游戏逻辑运行在平台隔离运行时内,与平台钱包等能力是进程内调用,不存在网络签名。后台操作在浏览器内完成,登录态由后台页面自动维护。</p>
+<p><strong>WebSocket 握手失败,错误码 401005?</strong>
+票据单次有效且 30 秒过期,重连必须重新索取。SDK 会自动处理;若自研客户端遇到该错误,检查是否复用了旧票据,或与建立连接的间隔是否超过 30 秒。</p>
+<p><strong>后台登录被限流(429001)?</strong>
+登录每 IP 每分钟 30 次,连续失败 10 次锁定 10 分钟。检查用户名密码,稍后再试。</p>
+<h2 id="游戏逻辑-1"><a class="header" href="#游戏逻辑-1">游戏逻辑</a></h2>
+<p><strong>为什么我的 onAction 没有被调用?</strong>
+玩法动作仅在会话进入 playing 状态后受理。quick 模式需玩家申报就绪且人数达到 minPlayer;room 模式需房主开局。检查前端是否调用了 <code>client.ready()</code> 或等待开局完成。</p>
+<p><strong>收到"游戏脚本执行超时"(500501)怎么办?</strong>
+单次回调(含定时器回调)硬上限 2 秒,超时会话立即进入 error 终态。优化搜索与 AI 算法复杂度,采用节点预算加兜底策略,把重计算拆到多个动作或定时器切片中。</p>
+<p><strong>onSync 不实现会怎样?</strong>
+断线重连、切换标签页回前台、错误恢复后的画面重建全部失效,提审也会被拒。onSync 是玩家对账的唯一通道,必须实现并用 <code>sendTo</code> 回应本人全量状态。</p>
+<p><strong>能用 Math.random 吗?</strong>
+运行时中 Math.random 已被替换为密码学安全随机源,普通玩法可直接使用。涉及资金与奖励的随机结果必须使用公平随机接口,保证玩家可验证,否则拒审。</p>
+<p><strong>逻辑包里为什么不能用 fetch、DOM?</strong>
+游戏逻辑运行在无网络、无 DOM 的隔离运行时中,这是安全模型的一部分。需要外部数据的玩法当前不支持,所有数据必须由玩家动作或前端带入。</p>
+<p><strong>钩子返回时回合没闭合会怎样?</strong>
+本次回调中排队的全部钱包操作作废并产生会话错误。必须保证任何分支下 beginRound 之后都能执行到 endRound,用 try/finally 组织代码。</p>
+<h2 id="资金与结算"><a class="header" href="#资金与结算">资金与结算</a></h2>
+<p><strong>余额不足时会发生什么?</strong>
+不会抛异常。扣款登记成功但 endRound 提交失败,返回 false;调用 <code>lastRoundError()</code> 读取原因(如 <code>[400511] 余额不足</code>),回滚本局状态并提示玩家。余额校验以平台结算时为准,禁止用 getBalance 预检。</p>
+<p><strong>玩家重复发送同一动作,会重复扣款吗?</strong>
+不会。客户端消息按玩家与动作序号去重,同一动作不会重复进入 onAction;回合内的每笔操作也有平台生成的幂等键,重复提交整回合会返回已完成结果。</p>
+<p><strong>getBalance 为什么和玩家看到的余额不一致?</strong>
+getBalance 是引擎本地缓存,可能滞后。游戏内余额显示的唯一权威是 <code>wallet:balance</code> 版本化推送,按 version 单调守卫应用。</p>
+<p><strong>回合提交有时间限制吗?</strong>
+endRound 提交超时 15 秒,整组操作原子生效,任一失败全部回滚并逐操作下发 wallet:error。不要设计跨回合的半结算状态。</p>
+<p><strong>不调用 recordResult 会怎样?</strong>
+玩家个人中心看不到该局的对局记录与胜负,影响体验与客服举证。建议每局结算时登记 win、lose 或 draw 与分数变化。</p>
+<h2 id="提审与发布"><a class="header" href="#提审与发布">提审与发布</a></h2>
+<p><strong>审核通过后还需要手动上架吗?</strong>
+不需要,过审即发布:游戏转为 approved、立即出现在大厅。版本回滚才需要调用 switch 接口。</p>
+<p><strong>只更新前端,逻辑包可以不传吗?</strong>
+可以,留空自动继承上一版本的逻辑包。反之亦然。但两侧都无变更的提交会被拒绝(400332)。</p>
+<p><strong>驳回原因在哪里看?</strong>
+包记录的 reviewComment 字段,经 <code>GET /api/admin/game/:id/package</code> 或后台版本页查看。</p>
+<p><strong>怎么回滚到旧版本?</strong>
+<code>POST /api/admin/game/:id/package/:pid/switch</code>,目标包必须是已过审状态;归档状态的游戏不能切换。</p>
+<p><strong>rtpDeclared 填写错误会怎样?</strong>
+平台每日比对实际运行数据,总投注 ≥ 10 万金币、回合 ≥ 100 且偏差超过 2 个百分点时触发风控核查。调整玩法参数后,记得在新版本同步更新申报值。</p>
+<p><strong>发版会影响进行中的对局吗?</strong>
+不会。进行中的对局继续使用旧版本直至结束,新对局使用新版本。</p>
+<h2 id="环境与联调"><a class="header" href="#环境与联调">环境与联调</a></h2>
+<p><strong>平台有 Sandbox 测试环境吗?</strong>
+当前没有独立 Sandbox。线上平台即为验证环境:金币为虚拟物品、支付为沙箱模拟,不会发生真实扣款。本地完成构建自检与逻辑自测后,直接在线上提审验证。</p>
+<p><strong>游戏前端本地单独打开为什么不能玩?</strong>
+没有平台宿主时拿不到连接配置与票据,SDK 会停在等待宿主状态,这是安全设计。界面与纯前端交互可本地预览,完整链路必须经平台大厅进入。</p>
+<p><strong>怎么在本地测多人玩法?</strong>
+同一浏览器的多个标签页共享登录态,是同一个玩家。测多人需要多个浏览器配置文件或无痕窗口,分别注册登录不同玩家账号后进入同一游戏:quick 模式等待匹配,room 模式用房间码互相加入。</p>
+<p><strong>如何排查线上对局问题?</strong>
+平台保留每回合审计账与最多 500 条广播事件的回放记录,可通过客服工单请求平台调取;游戏逻辑内用 <code>platform.log</code> 打出的日志也在平台侧留存。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="sdk-下载"><a class="header" href="#sdk-下载">SDK 下载</a></h1>
+<p>双 SDK 的完整源码以 zip 附件形式随本文档分发,已排除 node_modules 与 dist 构建产物。包内含全部 TypeScript 源码、类型声明与工程配置,解压后在各自目录执行 <code>npm install &amp;&amp; npm run build</code> 即可构建,产物位于 <code>dist/</code>。</p>
+<div class="table-wrapper"><table><thead><tr><th>文件</th><th>说明</th></tr></thead><tbody>
+<tr><td><a href="dev/../downloads/game-backend-sdk.zip">game-backend-sdk.zip</a></td><td>游戏逻辑 SDK 源码包</td></tr>
+<tr><td><a href="dev/../downloads/game-frontend-sdk.zip">game-frontend-sdk.zip</a></td><td>游戏前端 SDK 源码包</td></tr>
+<tr><td><a href="dev/../downloads/SHA256SUMS.txt">SHA256SUMS.txt</a></td><td>各包 sha256 校验和</td></tr>
+</tbody></table>
+</div>
+<h2 id="包内结构"><a class="header" href="#包内结构">包内结构</a></h2>
+<pre><code class="language-text">game-backend-sdk/
+├── package.json          工程定义与构建脚本
+├── tsconfig.json         TypeScript 配置,编译目标 ES5
+├── vite.config.ts        构建配置,产物为单文件 IIFE
+└── src/
+    ├── index.ts          入口:导出公共 API 并挂接运行时全局
+    ├── lifecycle.ts      GameLifecycle 生命周期基类
+    ├── api.ts            PlatformAPI 类型,即 platform 全局对象契约
+    └── events.ts         事件分发器
+
+game-frontend-sdk/
+├── package.json / tsconfig.json / vite.config.ts
+└── src/
+    ├── index.ts          入口:导出全部公共 API
+    ├── types.ts          公共类型定义
+    ├── host.ts           宿主协议:连接配置、票据索取与退出通知
+    ├── client.ts         GameClient:WebSocket 连接、自动重连与消息收发
+    ├── lifecycle.ts      GameLifecycle 生命周期基类
+    └── events.ts         事件分发器
+</code></pre>
+<p>SDK 的使用方式见<a href="dev/game-backend.html">游戏逻辑开发</a>与<a href="dev/game-frontend.html">游戏前端开发</a>,最短上手路径见<a href="dev/quick-start.html">快速开始</a>。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="mermaid.min.js"></script>
+        <script src="mermaid-init.js"></script>
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+
+    </div>
+    </body>
+</html>

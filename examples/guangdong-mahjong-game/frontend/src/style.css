@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  @apply bg-slate-950 text-slate-100 antialiased;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 翡翠呢绒牌桌：中心聚光 + 织纹 + 暗角 + 金线内框 */
+.table-felt {
+  background:
+    radial-gradient(ellipse 85% 65% at 50% 36%, rgba(52, 211, 153, 0.13) 0%, transparent 58%),
+    radial-gradient(ellipse 130% 105% at 50% 45%, #10613a 0%, #0d5230 45%, #0a3f25 72%, #072d1a 100%);
+  box-shadow: inset 0 0 150px rgba(0, 0, 0, 0.62);
+}
+.table-felt::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.014) 0 2px, transparent 2px 6px),
+    repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.025) 0 2px, transparent 2px 6px);
+  pointer-events: none;
+  z-index: 1;
+}
+.table-felt::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border-radius: 22px;
+  border: 1.5px solid rgba(251, 191, 36, 0.16);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 手牌滚动条 */
+.hand-scroll::-webkit-scrollbar {
+  height: 5px;
+}
+.hand-scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.35);
+  border-radius: 3px;
+}
+
+/* 弹出 / 发牌动效：tailwind 只在使用对应 utility 时才产出 keyframes，
+   pop-in / deal-in 仅被 scoped 样式与内联动画引用，这里全局兜底定义 */
+@keyframes pop-in {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+@keyframes deal-in {
+  0% {
+    transform: translateY(40px) scale(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}

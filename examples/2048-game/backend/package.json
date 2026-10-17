@@ -1,0 +1,18 @@
+{
+  "name": "game-2048-backend",
+  "private": true,
+  "version": "1.1.0",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "test": "tsc -p tsconfig.json --noEmit && vite build && node ../verify-2048.mjs && node ../verify-state-machine.mjs"
+  },
+  "dependencies": {
+    "@game-platform/backend-sdk": "file:../../../sdks/game-backend-sdk"
+  },
+  "devDependencies": {
+    "typescript": "~5.7.0",
+    "vite": "^6.0.0"
+  },
+  "type": "module"
+}

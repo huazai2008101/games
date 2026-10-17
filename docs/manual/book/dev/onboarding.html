@@ -1,0 +1,282 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>入驻与创建游戏 - 在线游戏平台文档</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="在线游戏平台:平台介绍、玩家使用指南与游戏开发商接入文档">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">在线游戏平台文档</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="入驻与创建游戏"><a class="header" href="#入驻与创建游戏">入驻与创建游戏</a></h1>
+<p>入驻与创建游戏全部在管理后台完成,无需调用任何接口。后台地址:<a href="https://game.zihua-chen.cn/admin/">game.zihua-chen.cn/admin</a>。</p>
+<h2 id="第一步提交入驻申请"><a class="header" href="#第一步提交入驻申请">第一步:提交入驻申请</a></h2>
+<p>打开后台登录页,点击左下角"开发商入驻"。</p>
+<p><img src="../supports/onboarding-login.png" alt="后台登录页" /></p>
+<p>在弹出的表单中填写:</p>
+<div class="table-wrapper"><table><thead><tr><th>字段</th><th>要求</th></tr></thead><tbody>
+<tr><td>开发商代码</td><td>2–30 位字母或数字,全局唯一,如 <code>pixelfun</code></td></tr>
+<tr><td>公司/团队名</td><td>不超过 100 字符,展示给平台运营</td></tr>
+<tr><td>管理员用户名</td><td>3–50 位,入驻通过后用它登录后台</td></tr>
+<tr><td>管理员邮箱</td><td>联系邮箱</td></tr>
+<tr><td>密码</td><td>至少 6 位</td></tr>
+</tbody></table>
+</div>
+<p><img src="../supports/onboarding-register.png" alt="填写入驻申请" /></p>
+<p>提交后提示"入驻申请已提交,平台审核通过后即可登录":</p>
+<p><img src="../supports/onboarding-submitted.png" alt="提交成功" /></p>
+<p>代码、用户名或邮箱重复会在表单上直接提示,换一个再提交即可。</p>
+<h2 id="第二步等待平台激活"><a class="header" href="#第二步等待平台激活">第二步:等待平台激活</a></h2>
+<p>入驻申请由平台运营在"开发商管理"中审核。激活前登录会被拒绝(错误码 403104/403301),激活后即可用管理员用户名和密码在登录页登录。开发商被平台停用后的表现相同,直至重新激活。</p>
+<p>登录后的账号能力边界:</p>
+<ul>
+<li>只能创建、修改、提审本开发商名下的游戏,越权返回 403。</li>
+<li>玩家管理、全量游戏列表、包审核与游戏上下架属平台职能,开发商无权限。</li>
+</ul>
+<h2 id="第三步创建游戏"><a class="header" href="#第三步创建游戏">第三步:创建游戏</a></h2>
+<p>登录后进入 内容生态 → 游戏管理,点击"新建游戏"。</p>
+<p><img src="../supports/onboarding-games.png" alt="游戏管理页" /></p>
+<p>按表单填写:</p>
+<div class="table-wrapper"><table><thead><tr><th>字段</th><th>要求</th></tr></thead><tbody>
+<tr><td>游戏名称</td><td>必填,不超过 255 字符,同一开发商内唯一</td></tr>
+<tr><td>描述</td><td>必填,不超过 5000 字符,展示在大厅</td></tr>
+<tr><td>分类</td><td>平台预设分类,下拉选择,如休闲、竞技、棋牌</td></tr>
+<tr><td>缩略图</td><td>选填。上传 png/jpg/webp(不超过 2 MB),存储在平台对象存储并自动回填站内 URL;外站图片 URL 会被后台校验拒绝(大厅 CSP 仅放行站内图片)</td></tr>
+<tr><td>玩家数</td><td>最小到最大,1–100,最小不大于最大</td></tr>
+<tr><td>游戏模式</td><td>快速匹配(quick)或房间(room)</td></tr>
+<tr><td>允许观战</td><td>是否开启会话级只读观战</td></tr>
+</tbody></table>
+</div>
+<p><img src="../supports/onboarding-game-create.png" alt="新建游戏表单" /></p>
+<p>会话模式选择:</p>
+<div class="table-wrapper"><table><thead><tr><th>模式</th><th>行为</th><th>适用</th></tr></thead><tbody>
+<tr><td>quick</td><td>玩家点击开始后进入平台匹配队列,会话人数达到 minPlayer 即自动就绪并开局</td><td>对战、牌桌类</td></tr>
+<tr><td>room</td><td>房主创建房间获得 6 位房间码,其他玩家凭码加入等待室,房主满足人数后开局</td><td>好友邀请、私密局</td></tr>
+</tbody></table>
+</div>
+<p>平台只在人数达到 minPlayer 时自动开局,人数不足时的补位或托管策略由游戏逻辑自行实现。除特殊玩法外建议 minPlayer 与 maxPlayer 相等,开局人数最确定、等待最短。</p>
+<p>保存后列表出现新游戏,状态为"草稿"、未发布,并分配游戏 ID:</p>
+<p><img src="../supports/onboarding-game-created.png" alt="创建成功" /></p>
+<p>游戏 ID 后续提审与版本管理都会用到,在列表第一列查看。此时游戏尚未上架,下一步是开发双端产物并提交第一个版本,见<a href="quick-start.html">快速开始</a>与<a href="review.html">提交与审核</a>。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../dev/quick-start.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../dev/game-backend.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../dev/quick-start.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../dev/game-backend.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "guangdong-mahjong-backend",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "node test/simulate.mjs"
+  },
+  "dependencies": {
+    "@game-platform/backend-sdk": "file:../../../sdks/game-backend-sdk"
+  },
+  "devDependencies": {
+    "typescript": "~5.7.0",
+    "vite": "^6.0.0"
+  }
+}

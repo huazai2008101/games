@@ -1,0 +1,300 @@
+<!DOCTYPE HTML>
+<html lang="zh" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>事件与协议规范 - 在线游戏平台文档</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="在线游戏平台:平台介绍、玩家使用指南与游戏开发商接入文档">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="../highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="../tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "../";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "../searchindex.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="../toc.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="../toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">在线游戏平台文档</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <i class="fa fa-spinner fa-spin"></i>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="事件与协议规范"><a class="header" href="#事件与协议规范">事件与协议规范</a></h1>
+<p>多数场景下前端 SDK 已完成协议封装,本章供自研客户端与深度排障使用。</p>
+<h2 id="websocket-消息信封"><a class="header" href="#websocket-消息信封">WebSocket 消息信封</a></h2>
+<p>平台使用统一信封,游戏开发通常无需直接操作,SDK 已封装:</p>
+<pre><code class="language-json">{
+  "type": "event",
+  "action": "poker:deal",
+  "payload": { },
+  "timestamp": 1769000000000,
+  "seq": 42,
+  "playerId": "…",
+  "gameId": "…",
+  "sessionId": "…"
+}
+</code></pre>
+<ul>
+<li>type 分为 event、action、system 三类。客户端只发送 action 与 system,seq 用于服务端去重,重发同一动作不会重复执行。</li>
+<li>单帧上限 64 KiB,禁止在单个动作或广播载荷中携带超大对象。</li>
+</ul>
+<h2 id="命名规范"><a class="header" href="#命名规范">命名规范</a></h2>
+<ul>
+<li>游戏自定义事件必须使用 <code>&lt;游戏前缀&gt;:&lt;事件名&gt;</code> 命名空间,例如 <code>xq:move</code>,避免与其他游戏及平台消息冲突。</li>
+<li>玩家动作必须使用小写 snake_case,例如 move、draw、discard。</li>
+<li>载荷字段统一 snake_case。</li>
+<li>禁止复用 session、wallet、fair、error、state:sync 等平台保留前缀与名称。</li>
+</ul>
+<h2 id="连接建立"><a class="header" href="#连接建立">连接建立</a></h2>
+<pre><code class="language-text">1. 携带玩家访问令牌换取一次性票据:
+   POST /game/ws/ticket      Authorization: Bearer &lt;accessToken&gt;
+   → { "ticket": "…" }      票据单次有效,30 秒过期
+
+2. 建立 WebSocket:
+   GET /game/ws?ticket=&lt;ticket&gt;&amp;gameId=&lt;gameId&gt;
+       [&amp;sessionId=&lt;sessionId&gt; | &amp;roomCode=&lt;roomCode&gt;]
+       [&amp;spectate=1]
+</code></pre>
+<p>连接成功后服务端下发 <code>session:joined</code>,观战则下发 <code>session:spectating</code>。票据无效或过期时升级请求被拒绝,响应头 <code>X-Error-Code</code> 为 401005;SDK 会自动重新索取票据。</p>
+<h2 id="客户端-system-消息"><a class="header" href="#客户端-system-消息">客户端 system 消息</a></h2>
+<p>客户端只发送 action 与 system 两类消息。system 消息由平台网关处理,不进入游戏逻辑,前端 SDK 已封装为对应方法,自研客户端直接发送:</p>
+<div class="table-wrapper"><table><thead><tr><th>消息</th><th>SDK 方法</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>session:ready</code></td><td><code>ready()</code></td><td>quick 模式申报就绪;人数满员时平台也会代发,重复发送幂等</td></tr>
+<tr><td><code>session:start</code></td><td><code>start()</code></td><td>room 模式房主开局</td></tr>
+<tr><td><code>session:finish</code></td><td><code>finish()</code></td><td>主动结束会话</td></tr>
+<tr><td><code>state:sync</code></td><td><code>sync()</code></td><td>拉取本人权威快照,平台路由到游戏逻辑的 <code>onSync</code></td></tr>
+</tbody></table>
+</div>
+<h2 id="会话状态机"><a class="header" href="#会话状态机">会话状态机</a></h2>
+<pre><code class="language-text">created → waiting → ready → playing → finished
+                              ↘ error / timeout 终态
+</code></pre>
+<p>前端通过 <code>session:state</code> 消息与 onStateChange 感知状态流转。玩法动作仅在 playing 状态被受理。</p>
+<h2 id="房间模式-rest"><a class="header" href="#房间模式-rest">房间模式 REST</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>接口</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>POST /game/:id/room</code></td><td>创建房间,响应含 sessionId、roomCode、minPlayer、maxPlayer、reused。同一房主已有房间则复用,reused 为 true</td></tr>
+<tr><td><code>GET /game/:id/room/:roomCode?after=&lt;gen&gt;</code></td><td>等待室状态长轮询,响应含 state、owner、players、gen、isOwner。gen 变化立即返回,最多挂起 25 秒</td></tr>
+<tr><td><code>POST /game/:id/room/:roomCode/start</code></td><td>房主开局,要求人数达标,响应 state 为 playing</td></tr>
+</tbody></table>
+</div>
+<p>客人加入不走 REST,直接以 roomCode 参数建立 WebSocket。房间码为 6 位大写字符,已去除易混淆字符。</p>
+<h2 id="断线重连与离席"><a class="header" href="#断线重连与离席">断线重连与离席</a></h2>
+<div class="table-wrapper"><table><thead><tr><th>机制</th><th>行为</th></tr></thead><tbody>
+<tr><td>同账号多端</td><td>允许多端多标签并存,各自独立连接</td></tr>
+<tr><td>断线重连</td><td>携相同 sessionId 或 roomCode 重连即回到会话,随后通过 sync 拉取权威快照,座位仍保留</td></tr>
+<tr><td>离席判定</td><td>最后一条连接断开且无其他在线连接时触发 onPlayerLeave,多标签场景平台已去重。网络中断等异常断开最迟 2 分钟内判定</td></tr>
+<tr><td>会话生命周期</td><td>会话最长存活 2 小时,超时进入 timeout 终态并广播 session:timeout</td></tr>
+</tbody></table>
+</div>
+<p>建议游戏逻辑在 onPlayerLeave 时将离席座位转为托管而非立即终局,在 onPlayerJoin 时归还控制权,可获得最好的断线体验。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../dev/game-frontend.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="../dev/funds.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../dev/game-frontend.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="../dev/funds.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../mermaid.min.js"></script>
+        <script src="../mermaid-init.js"></script>
+
+
+
+    </div>
+    </body>
+</html>
