@@ -406,5 +406,3 @@ English keywords: online game platform, H5 game SDK, web game platform, browser 
 接入需求：quick 匹配 / room 房间 / 观战 / 单人玩法
 预计上线时间：
 ```
-
-> 本仓库同步自 Online Game Platform 的官方文档与示例工程；`sdks/` 根目录仅同步官方 SDK 的 dist 构建产物。注意：`docs/manual/src/downloads/` 与 `docs/manual/book/downloads/` 中的 SDK zip 是随上游文档原样同步的源码下载包。
