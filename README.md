@@ -84,6 +84,15 @@ SDK 产物说明：
 | [sdks/game-frontend-sdk/game-frontend-sdk.umd.js](sdks/game-frontend-sdk/game-frontend-sdk.umd.js) | `<script>` 直接加载，暴露 `GameFrontendSDK` |
 | [sdks/game-frontend-sdk/*.d.ts](sdks/game-frontend-sdk/index.d.ts) | 前端客户端与宿主协议类型声明 |
 
+如果 TypeScript 工程直接按 `.js` 产物路径导入，需要让 TypeScript 找到同名类型声明。复制 SDK 产物后，可在自己的项目内执行：
+
+```bash
+cp sdks/game-backend-sdk/index.d.ts sdks/game-backend-sdk/game-backend-sdk.d.ts
+cp sdks/game-frontend-sdk/index.d.ts sdks/game-frontend-sdk/game-frontend-sdk.es.d.ts
+```
+
+这只是在消费侧生成与 JS 入口同名的声明入口，不引入 SDK 源码；原目录中的 `index.d.ts` 及其依赖类型仍从构建产物目录读取。
+
 ### 2. 开发服务器权威游戏逻辑
 
 游戏逻辑最终必须构建为**单文件 IIFE JavaScript**。它运行在平台无网络、无 DOM 的隔离运行时中，不能调用 `fetch`、`XMLHttpRequest`、第三方 API 或外部 WebSocket。所有会影响胜负与资金的结果都必须在这里裁决。
@@ -111,19 +120,29 @@ class HiLoGame extends GameLifecycle {
   onAction(playerId: string, action: string, payload: any) {
     if (action !== 'play') return
 
+    const bet = Math.floor(Number(payload.bet) || 0)
+    if (bet < 1) return
+
+    const guess = payload.guess === 'lo' ? 'lo' : 'hi'
     const roundId = platform.beginRound()
     if (!roundId) return
 
-    try {
-      platform.deductBalance(playerId, 10, 'HiLo bet')
+    const seedId = `fair:${roundId}`
+    if (!platform.beginFairRound(seedId)) {
+      platform.endRound()
+      return
+    }
 
-      const seedId = `fair:${roundId}`
-      platform.beginFairRound(seedId)
-      const roll = Math.floor(platform.getFairRandom(seedId, 0) * 100) + 1
-      const win = roll > 50
-      if (win) platform.rewardBalance(playerId, 20, 'HiLo payout')
+    try {
+      platform.deductBalance(playerId, bet, 'HiLo bet')
+      const draw = platform.getFairRandom(seedId, 0)
+      if (draw === false) return
+
+      const roll = Math.floor(draw * 100) + 1
+      const win = guess === 'hi' ? roll > 50 : roll <= 50
+      if (win) platform.rewardBalance(playerId, bet * 2, 'HiLo payout')
       platform.revealFairRound(seedId)
-      platform.recordResult(playerId, win ? 'win' : 'lose', win ? 10 : -10)
+      platform.recordResult(playerId, win ? 'win' : 'lose', win ? bet : -bet)
     } finally {
       // 余额操作必须处在 beginRound / endRound 之间，并保证任何分支都能闭合。
       if (!platform.endRound()) {
@@ -299,13 +318,13 @@ zip -r ../game-frontend.zip .
 
 ## 参考已实现游戏
 
-以下是官方接入架构下的参考实现。每款都包含游戏前端、服务器权威逻辑、事件契约、本地联调方案与钱包结算实践，可直接作为 H5 小游戏、棋牌、休闲游戏、多人对战游戏接入模板。
+以下是官方接入架构下的参考实现。每款都包含游戏前端、服务器权威逻辑、事件契约与构建/验证说明；象棋、斗地主、麻将和消消乐还提供 mock 宿主本地联调服务。它们可作为 H5 小游戏、棋牌、休闲游戏、多人对战游戏的接入参考模板。
 
 | 参考游戏 | 类型 | 推荐学习点 |
 | --- | --- | --- |
 | [中国象棋 Xiangqi](examples/xiangqi-game/README.md) | 双人棋类 / 自动匹配 / 观战 | 规则引擎、合法落点校验、AI 托管、断线归队、全量状态快照 |
 | [斗地主 Doudizhu](examples/doudizhu-game/README.md) | 三人棋牌 / 自动匹配 | 叫分、出牌、炸弹倍率、AI 补位、离席代打、可验证洗牌、连局结算 |
-| [广东麻将 Guangdong Mahjong](examples/guangdong-mahjong-game/README.md) | 四人麻将 / 房间对战 | 洗牌、胡牌判定、多人状态机、事件命名空间、桌类 UI 适配 |
+| [广东麻将 Guangdong Mahjong](examples/guangdong-mahjong-game/README.md) | 四人麻将 / quick 自动匹配 | 洗牌、胡牌判定、多人状态机、事件命名空间、桌类 UI 适配 |
 | [2048 数字合成](examples/2048-game/README.md) | 单人益智 / 入场结算 | 服务器权威棋盘、Commit-Reveal 随机、断线恢复、按倍率返奖 |
 | [宝石消消乐 Match 3](examples/match3-game/README.md) | 休闲消除 / 单人 quick | 局内状态、事件契约、公平随机、本地 mock 联调 |
 | [Neon Plinko](examples/plinko-game/README.md) | 概率型休闲 / 风险档位 | 可验证掉落、赔率表、RTP 申报、前端表现与服务器结果分离 |
@@ -361,13 +380,13 @@ zip -r ../game-frontend.zip .
 
 ### 随机结果可以被玩家验证吗？
 
-可以。涉及资金与奖励的随机结果建议使用 `beginFairRound()`、`getFairRandom()`、`revealFairRound()`，平台会广播承诺并揭示种子，玩家可复算随机过程。
+可以。涉及资金与奖励的随机结果必须使用 `beginFairRound()`、`getFairRandom()`、`revealFairRound()`，平台会广播承诺并揭示种子，玩家可复算随机过程。
 
 ## 搜索与标签
 
 为方便开发者检索，本仓库覆盖以下主题：**Online Game Platform**、**在线游戏平台**、**H5 游戏接入**、**Web Game SDK**、**小游戏平台**、**游戏开放平台**、**TypeScript Game SDK**、**WebSocket 游戏**、**多人联机游戏开发**、**棋牌游戏接入**、**斗地主源码示例**、**中国象棋源码示例**、**麻将游戏源码示例**、**2048 示例**、**Plinko 示例**、**Slot Machine 示例**、**服务器权威游戏架构**、**公平随机 commit reveal**、**游戏钱包结算**、**Quick Match**、**Room Code**、**Spectate**、**Browser Game Distribution**。
 
-English keywords: online game platform, H5 game SDK, web game platform, browser game distribution, TypeScript game SDK, WebSocket multiplayer game, server-authoritative game logic, provably fair random, game wallet settlement, quick match, room code, spectator mode, HTML5 casino game, chess game example, card game example, mahjong game example, 2048 game example.
+English keywords: online game platform, H5 game SDK, web game platform, browser game distribution, TypeScript game SDK, WebSocket multiplayer game, server-authoritative game logic, provably fair random, game wallet settlement, quick match, room code, spectator mode, HTML5 casino-style casual game with virtual coins, chess game example, card game example, mahjong game example, 2048 game example.
 
 ## 联系方式
 
@@ -388,4 +407,4 @@ English keywords: online game platform, H5 game SDK, web game platform, browser 
 预计上线时间：
 ```
 
-> 本仓库同步自 Online Game Platform 的官方文档、示例工程与 SDK 构建产物，持续保持接入资料可检索、可复现、可复制。
+> 本仓库同步自 Online Game Platform 的官方文档与示例工程；`sdks/` 根目录仅同步官方 SDK 的 dist 构建产物。注意：`docs/manual/src/downloads/` 与 `docs/manual/book/downloads/` 中的 SDK zip 是随上游文档原样同步的源码下载包。
