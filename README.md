@@ -15,6 +15,17 @@
 
 ![Platform](https://img.shields.io/badge/Platform-Online%20Game%20Platform-blue) ![Frontend](https://img.shields.io/badge/Frontend-H5%20%2F%20Web%20%2F%20TypeScript-informational) ![Network](https://img.shields.io/badge/Network-WebSocket%20%2B%20REST-green) ![Game](https://img.shields.io/badge/Game-Quick%20Match%20%2F%20Room%20%2F%20Spectate-orange) ![Trust](https://img.shields.io/badge/Trust-Server%20Authority%20%2F%20Provably%20Fair-purple)
 
+## 快速体验游戏大厅
+
+打开 [Online Game Platform 游戏大厅](https://game.zihua-chen.cn)，使用下面的演示账号直接登录体验，无需注册：
+
+| 项目 | 值 |
+| --- | --- |
+| 体验账号 | `tester01` |
+| 登录密码 | `123456` |
+
+> 该账号仅用于产品体验和接入演示。平台金币为虚拟物品，支付链路为沙箱模拟，不涉及真实资金交易。
+
 ## 为什么选择 Online Game Platform 接入 H5 游戏
 
 | 开发者要做 | 平台已负责 |
